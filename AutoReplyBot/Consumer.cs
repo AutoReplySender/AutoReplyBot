@@ -22,7 +22,7 @@ public class Consumer
         while (true)
         {
             var (comment, content, userNo, userName) = _channel.Take();
-            var reply = await _matcher.Match(content);
+            var reply = await _matcher.Match(content, userName);
             if (reply == null) continue;
             if (!await db.CheckProcessed(comment))
             {

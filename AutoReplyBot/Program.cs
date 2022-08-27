@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using static Band.Helper;
 
 namespace AutoReplyBot;
 
@@ -25,13 +26,17 @@ class Program
         return new BandClient(cookies, proxy)
         {
             Suffix =
-                "I am a bot, and this action was performed automatically. Please contact nobody if you have any questions or concerns."
+                "I am a bot, and this action was performed automatically. Please contact 兔友小e if you have any questions or concerns."
         };
     }
 
-    public static string GetCookiesFromBrowser(string email, string password, string chromeDriverDir, string chromePath)
+    public static string GetCookiesFromBrowser(string email, string password, string chromeDriverDir, string chromePath, bool headless)
     {
         var options = new ChromeOptions {BinaryLocation = chromePath};
+        if (headless)
+        {
+            options.AddArguments("headless");
+        }
         var driver = new ChromeDriver(chromeDriverDir, options);
         driver.Navigate().GoToUrl("https://auth.band.us/email_login?keep_login=true");
         driver.FindElement(By.Id("input_email")).SendKeys(email);
@@ -62,7 +67,16 @@ class Program
         var config = JsonSerializer.Deserialize<Config>(await File.ReadAllBytesAsync("config.json"))!;
         var (email, password, chromeDriverDir, chromePath, consumers, proxy) = config;
         var matcher = new Matcher(await LoadRules());
-        var cookies = GetCookiesFromBrowser(email, password, chromeDriverDir, chromePath);
+        String cookies = "";
+        if (args.Contains("--login"))
+        {
+            cookies = GetCookiesFromBrowser(email, password, chromeDriverDir, chromePath, args.Contains("--headless"));
+            await File.WriteAllBytesAsync("saved.cookies", Encoding.UTF8.GetBytes(cookies));
+        }
+        else
+        {
+            cookies = Encoding.UTF8.GetString(await File.ReadAllBytesAsync("saved.cookies"));
+        }
         var client = InitBandClient(cookies, proxy);
         var channel = new BlockingCollection<ChannelData>();
         for (var i = 0; i < consumers; i++)

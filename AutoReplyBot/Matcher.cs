@@ -9,10 +9,10 @@ public class Matcher
         _rules = rules;
     }
 
-    public async Task<string?> Match(string content)
+    public async Task<string?> Match(string content, string userName)
     {
         if (content.Contains("I am a bot")) return null;
-        var rule = _rules.FirstOrDefault(r => r.Keywords.Any(content.Contains));
+        var rule = _rules.FirstOrDefault(r => (r.Keywords.Any(content.Contains) || r.Keywords.Contains("*")) && (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")));
         if (rule == null) return null;
         var reply = rule.Replies[Random.Shared.Next(rule.Replies.Count)];
         return reply.ReplyType switch

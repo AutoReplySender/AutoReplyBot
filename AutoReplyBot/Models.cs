@@ -33,6 +33,7 @@ public class Rule
 {
     public int Id { get; set; }
     public required List<string> Keywords { get; set; }
+    public required List<string> TargetAuthors { get; set; }
     [Column(TypeName = "jsonb")] public required List<Reply> Replies { get; set; }
 }
 
