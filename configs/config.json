@@ -1,0 +1,8 @@
+{
+  "Email": "",
+  "Password": "",
+  "ChromeDriverDir": "",
+  "ChromePath": "/usr/bin/chrome-browser",
+  "Consumers": 4,
+  "Proxy": "http://localhost:8888"
+}
