@@ -4,5 +4,6 @@
   "ChromeDriverDir": "",
   "ChromePath": "/usr/bin/chrome-browser",
   "Consumers": 4,
-  "Proxy": "http://localhost:8888"
+  "Proxy": "http://localhost:8888",
+  "MaxTriggerTimesBySinglePost": 9
 }

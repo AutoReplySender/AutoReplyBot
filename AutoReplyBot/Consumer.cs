@@ -25,10 +25,10 @@ public class Consumer
             {
                 var (comment, content, userNo, userName) = _channel.Take();
                 if (await db.CheckProcessed(comment)) continue;
-                var reply = await _matcher.Match(content, userName);
-                if (reply != null)
+                var replies = await _matcher.Match(content, userName);
+                var (bandNo, postNo, commentId, _) = comment;
+                foreach (var reply in replies)
                 {
-                    var (bandNo, postNo, commentId, _) = comment;
                     Console.WriteLine($"Now replying {reply} to {bandNo} {postNo} {userName} {content}");
                     switch (comment)
                     {

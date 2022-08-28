@@ -13,7 +13,7 @@ namespace AutoReplyBot;
 class Program
 {
     public record Config(string Email, string Password, string ChromeDriverDir, string ChromePath, int Consumers,
-        string Proxy);
+        string Proxy, int MaxTriggerTimesBySinglePost);
 
     public static async Task<List<Rule>> LoadRules()
     {
@@ -30,13 +30,15 @@ class Program
         };
     }
 
-    public static string GetCookiesFromBrowser(string email, string password, string chromeDriverDir, string chromePath, bool headless)
+    public static string GetCookiesFromBrowser(string email, string password, string chromeDriverDir, string chromePath,
+        bool headless)
     {
         var options = new ChromeOptions {BinaryLocation = chromePath};
         if (headless)
         {
             options.AddArguments("headless");
         }
+
         var driver = new ChromeDriver(chromeDriverDir, options);
         driver.Navigate().GoToUrl("https://auth.band.us/email_login?keep_login=true");
         driver.FindElement(By.Id("input_email")).SendKeys(email);
@@ -65,18 +67,19 @@ class Program
         #endregion
 
         var config = JsonSerializer.Deserialize<Config>(await File.ReadAllBytesAsync("config.json"))!;
-        var (email, password, chromeDriverDir, chromePath, consumers, proxy) = config;
-        var matcher = new Matcher(await LoadRules());
-        String cookies = "";
+        var (email, password, chromeDriverDir, chromePath, consumers, proxy, maxTriggerTimesBySinglePost) = config;
+        var matcher = new Matcher(await LoadRules(), maxTriggerTimesBySinglePost);
+        string cookies;
         if (args.Contains("--login"))
         {
             cookies = GetCookiesFromBrowser(email, password, chromeDriverDir, chromePath, args.Contains("--headless"));
-            await File.WriteAllBytesAsync("saved.cookies", Encoding.UTF8.GetBytes(cookies));
+            await File.WriteAllTextAsync("saved.cookies", cookies);
         }
         else
         {
-            cookies = Encoding.UTF8.GetString(await File.ReadAllBytesAsync("saved.cookies"));
+            cookies = await File.ReadAllTextAsync("saved.cookies");
         }
+
         var client = InitBandClient(cookies, proxy);
         var channel = new BlockingCollection<ChannelData>();
         for (var i = 0; i < consumers; i++)
