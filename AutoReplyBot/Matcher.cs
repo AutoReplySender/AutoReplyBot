@@ -21,7 +21,7 @@ public class Matcher
                         (r.IgnoreCase == true && r.Keywords.Any(content.ToLower().Contains))) &&
                         (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")) &&
                         (r.TriggerChance == null ||
-                        (r.TriggerChance != null && r.TriggerChance >= Random.Shared.Next(100))))
+                        (r.TriggerChance != null && r.TriggerChance > Random.Shared.Next(100))))
             .Take(_takes)
             .Select(async r =>
             {
