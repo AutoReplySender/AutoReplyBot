@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 using static Band.Helper;
 
 namespace AutoReplyBot;
@@ -17,8 +19,12 @@ class Program
 
     public static async Task<List<Rule>> LoadRules()
     {
-        await using var db = new AutoReplyContext();
-        return await db.Rules.ToListAsync();
+        string content = await File.ReadAllTextAsync("configs/rules.yaml");
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+        var rules = deserializer.Deserialize<List<Rule>>(content);
+        return rules;
     }
 
     public static BandClient InitBandClient(string cookies, string proxy)
@@ -33,7 +39,7 @@ class Program
     public static string GetCookiesFromBrowser(string email, string password, string chromeDriverDir, string chromePath,
         bool headless)
     {
-        var options = new ChromeOptions {BinaryLocation = chromePath};
+        var options = new ChromeOptions { BinaryLocation = chromePath };
         if (headless)
         {
             options.AddArguments("headless");
@@ -48,7 +54,7 @@ class Program
         var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
         wait.Until(d => d.Url.StartsWith("https://band.us"));
         driver.Navigate().GoToUrl("https://auth.band.us");
-        var cookies = (string) driver.ExecuteScript("return document.cookie");
+        var cookies = (string)driver.ExecuteScript("return document.cookie");
 #if DEBUG
         Console.WriteLine(cookies);
 #endif
@@ -66,18 +72,18 @@ class Program
 
         #endregion
 
-        var config = JsonSerializer.Deserialize<Config>(await File.ReadAllBytesAsync("config.json"))!;
+        var config = JsonSerializer.Deserialize<Config>(await File.ReadAllBytesAsync("configs/config.json"))!;
         var (email, password, chromeDriverDir, chromePath, consumers, proxy, maxTriggerTimesBySinglePost) = config;
         var matcher = new Matcher(await LoadRules(), maxTriggerTimesBySinglePost);
         string cookies;
         if (args.Contains("--login"))
         {
             cookies = GetCookiesFromBrowser(email, password, chromeDriverDir, chromePath, args.Contains("--headless"));
-            await File.WriteAllTextAsync("saved.cookies", cookies);
+            await File.WriteAllTextAsync("configs/saved.cookies", cookies);
         }
         else
         {
-            cookies = await File.ReadAllTextAsync("saved.cookies");
+            cookies = await File.ReadAllTextAsync("configs/saved.cookies");
         }
 
         var client = InitBandClient(cookies, proxy);

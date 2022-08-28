@@ -16,16 +16,20 @@ public class Matcher
         if (content.Contains("I am a bot")) return Task.FromResult(Array.Empty<string>());
         var replies = _rules
             .AsParallel()
-            .Where(r => (r.Keywords.Any(content.Contains) || r.Keywords.Contains("*")) &&
-                        (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")))
+            .Where(r => (r.Keywords.Contains("*") ||
+                        (r.IgnoreCase != true && r.Keywords.Any(content.Contains)) ||
+                        (r.IgnoreCase == true && r.Keywords.Any(content.ToLower().Contains))) &&
+                        (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")) &&
+                        (r.TriggerChance == null ||
+                        (r.TriggerChance != null && r.TriggerChance >= Random.Shared.Next(100))))
             .Take(_takes)
             .Select(async r =>
             {
                 var reply = r.Replies[Random.Shared.Next(r.Replies.Count)];
                 return reply.ReplyType switch
                 {
-                    ReplyType.PlainText => reply.Data,
-                    ReplyType.CSharpScript => await Script.Eval(reply.Data),
+                    ReplyType.PlainText => reply.Data.Trim(),
+                    ReplyType.CSharpScript => await Script.Eval(reply.Data.Trim()),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             });
