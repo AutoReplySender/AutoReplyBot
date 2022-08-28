@@ -6,7 +6,6 @@ using System.Text.Json;
 using Band.Models;
 using Band.Models.Comments;
 using Band.Models.Feed;
-using Band.Models.Posts;
 using Polly;
 using static Band.Helper;
 
@@ -109,19 +108,6 @@ public class BandClient : IDisposable
             ContentKey = new ContentKey {PostNo = postNo, ContentType = "post_comment", CommentId = commentId}
         }.ToDictionary();
         return PostAsync(uri, form);
-    }
-
-    public async Task<Posts> GetPostsAsync(int bandNo)
-    {
-        const string uri = "/v2.0.0/get_posts";
-        var form = new
-        {
-            BandNo = bandNo,
-            Direction = "before"
-        }.ToDictionary();
-        using var response = await PostAsync(uri, form);
-        await using var stream = await response.Content.ReadAsStreamAsync();
-        return (await JsonSerializer.DeserializeAsync<Result<Posts>>(stream))!.ResultData;
     }
 
     public async Task<Comments> GetCommentsAsync(int bandNo, int postNo)
