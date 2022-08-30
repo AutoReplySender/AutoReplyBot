@@ -9,18 +9,16 @@ bot 使用的各项配置文件保存在 `config` 文件夹下。
 ### 关键词及语录：`rules.yaml`
 
 ```yaml
-- # 每条语录是数组中的一个元素
+# 每条语录是数组中的一个元素
   keywords: [关键词一,关键词二] # 触发bot的关键词，支持"*"通配符始终触发
   target_authors: ["*"] # 触发bot的目标用户，支持"*"通配符始终触发
   # 目标用户与关键词两个条件须同时满足才会触发bot
   replies: # 触发bot后发送的回复。支持设定多条回复，bot会随机选择一条发送
-    - 
-      data: 回复文本一
+    - data: 回复文本一
       reply_type: 0 # 0代表正常文本，1代表需要求值的C#表达式
-    - 
-      data: 回复文本二
+    - data: 回复文本二
       reply_type: 0
-  ignore_case: true # 可选，设置为true时关键词忽略大小写（请将关键词本身写成小写），默认区分大小写
+  ignore_case: false # 可选，设置为false时关键词不区分大小写，默认区分大小写
   trigger_chance: 100 # 可选，满足触发条件时触发bot的概率的百分数，默认为100%触发
 ```
 
