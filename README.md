@@ -4,7 +4,7 @@
 
 ## 配置文件说明
 
-bot 使用的各项配置文件保存在 `config` 文件夹下。
+bot 使用的各项配置文件保存在 `configs` 文件夹下。
 
 ### 关键词及语录：`rules.yaml`
 
@@ -42,13 +42,13 @@ bot 使用的各项配置文件保存在 `config` 文件夹下。
 
 ### 浏览器 cookie 保存：`saved.cookies`
 
-bot 保存的浏览器 cookie，预先准备好此文件则无需使用邮箱、密码登录。要获取 cookie，请使用 chrome 浏览器登录 BAND 并勾选“记住登录”，之后访问 auth.band.us，在浏览器开发者工具—控制台中输入 `document.cookie` 获得 cookie 字符串，将其保存即可。整个字符串的开头和结尾不要加引号。
+bot 保存的浏览器 cookie，预先准备好此文件则无需使用邮箱、密码登录。要获取 cookie，请使用 Chrome 浏览器登录 BAND 并勾选“记住登录”，之后访问 auth.band.us，在浏览器开发者工具—控制台中输入 `document.cookie` 获得 cookie 字符串，将其保存即可。整个字符串的开头和结尾不要加引号。
 
 ## 环境配置
 
 编译本 bot 的源代码需要安装 [dotnet SDK](https://dotnet.microsoft.com/en-us/download)，版本为7.0。可以使用 IDE （Visual Studio，Rider）或 [dotnet publish](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish) 命令进行编译。
 
-运行本 bot 需要安装 [PostgreSQL](https://www.postgresql.org/download/) 数据库。安装完成后，请将 `pg_hba.conf` 文件中本地（local）访问的信任级别由 peer 或 md5 级别改为 trust 级别，或是修改 `Model.cs` 文件中 `AutoReplyContext` 类的数据库连接字符串，配置好相应用户名和密码。接下来，请运行 db.sql 中的 DDL 代码，创建 bot 需要的数据库表：
+运行本 bot 需要安装 [PostgreSQL](https://www.postgresql.org/download/) 数据库。安装完成后，请将 `pg_hba.conf` 文件中本地（local）访问的信任级别由 peer 或 md5 级别改为 trust 级别，或是修改 `Model.cs` 文件中 `AutoReplyContext` 类的数据库连接字符串，配置好用户名和密码。接下来，请运行 `db.sql` 中的 DDL 代码，创建 bot 需要的数据库表：
 
 ```shell
 cd AutoReplyBot
@@ -68,6 +68,6 @@ chmod +x ./AutoReplyBot
 
 ```shell
 AutoReplyBot: ./AutoReplyBot [--login] [--headless]
-    --login    使用Selenium-Webdriver控制Chrome浏览器输入用户名和密码登录BAND。默认读取saved.cookies中的cookie登录。
-    --headless    将Chrome浏览器设置为无头模式。默认为图形界面模式。
+    --login    使用Selenium-Webdriver控制Chrome浏览器输入用户名和密码登录BAND。默认读取saved.cookies中的cookie登录
+    --headless    将Chrome浏览器设置为无头模式。默认为图形界面模式
 ```
