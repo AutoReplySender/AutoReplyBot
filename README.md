@@ -20,6 +20,7 @@ bot 使用的各项配置文件保存在 `configs` 文件夹下。
       reply_type: 0
   ignore_case: false # 可选，设置为false时关键词区分大小写，默认不区分大小写
   trigger_chance: 100 # 可选，满足触发条件时触发bot的概率的百分数，默认为100%触发
+  emotion_type: sad # 可选，满足触发条件时设置的表情，默认不设置表情。当前BAND支持great, funny, like, shocked, sad, angry六种表情
 ```
 
 ### 运行配置：`config.json`

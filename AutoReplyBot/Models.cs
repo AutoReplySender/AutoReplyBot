@@ -37,6 +37,7 @@ public class Rule
     [Column(TypeName = "jsonb")] public required List<Reply> Replies { get; set; }
     public bool? IgnoreCase { get; set; } 
     public int? TriggerChance { get; set; }
+    public string? EmotionType { get; set; }
 }
 
 public class Reply

@@ -11,10 +11,21 @@ public class Matcher
         _takes = takes;
     }
 
-    public Task<string[]> Match(string content, string userName)
+    public class Action
     {
-        if (content.Contains("I am a bot")) return Task.FromResult(Array.Empty<string>());
-        var replies = _rules
+        public Action(string replyContent, string? emotionType)
+        {
+            ReplyContent = replyContent;
+            EmotionType = emotionType;
+        }
+        public string ReplyContent { get; set; }
+        public string? EmotionType { get; set; }
+    }
+
+    public Task<Action[]> Match(string content, string userName)
+    {
+        if (content.Contains("I am a bot")) return Task.FromResult(Array.Empty<Action>());
+        var actions = _rules
             .AsParallel()
             .Where(r => (r.Keywords.Contains("*") ||
                         (r.IgnoreCase != false && r.Keywords.Any(k => content.Contains(k, StringComparison.OrdinalIgnoreCase))) ||
@@ -28,11 +39,11 @@ public class Matcher
                 var reply = r.Replies[Random.Shared.Next(r.Replies.Count)];
                 return reply.ReplyType switch
                 {
-                    ReplyType.PlainText => reply.Data.Trim(),
-                    ReplyType.CSharpScript => await Script.Eval(reply.Data.Trim()),
+                    ReplyType.PlainText => new Action(reply.Data.Trim(), r.EmotionType),
+                    ReplyType.CSharpScript => new Action(await Script.Eval(reply.Data.Trim()), r.EmotionType),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             });
-        return Task.WhenAll(replies);
+        return Task.WhenAll(actions);
     }
 }

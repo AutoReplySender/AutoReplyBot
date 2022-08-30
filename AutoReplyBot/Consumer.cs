@@ -25,18 +25,30 @@ public class Consumer
             {
                 var (comment, content, userNo, userName) = _channel.Take();
                 if (await db.CheckProcessed(comment)) continue;
-                var replies = await _matcher.Match(content, userName);
+                var actions = await _matcher.Match(content, userName);
                 var (bandNo, postNo, commentId, _) = comment;
-                foreach (var reply in replies)
+                foreach (var action in actions)
                 {
-                    Console.WriteLine($"Now replying {reply} to {bandNo} {postNo} {userName} {content}");
+                    Console.WriteLine($"Now replying {action.ReplyContent} to {bandNo} {postNo} {userName} {content}");
+                    if (action.EmotionType != null)
+                    {
+                        Console.WriteLine($"Adding Emotion {action.EmotionType} to {bandNo} {postNo} {userName} {content}");
+                    }
                     switch (comment)
                     {
                         case (_, _, 0, 0):
-                            await _bandClient.CreateCommentAsync(bandNo, postNo, reply);
+                            await _bandClient.CreateCommentAsync(bandNo, postNo, action.ReplyContent);
+                            if (action.EmotionType != null)
+                            {
+                                await _bandClient.SetEmotionAsync(bandNo, postNo, action.EmotionType);
+                            }
                             break;
                         default:
-                            await _bandClient.CreateCommentAsync(bandNo, postNo, commentId, reply, userNo, userName);
+                            await _bandClient.CreateCommentAsync(bandNo, postNo, commentId, action.ReplyContent, userNo, userName);
+                            if (action.EmotionType != null)
+                            {
+                                await _bandClient.SetEmotionAsync(bandNo, postNo, commentId, action.EmotionType);
+                            }
                             break;
                     }
                 }

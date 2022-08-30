@@ -122,6 +122,7 @@
   replies:
     - data: bot麻了，bot需要牛牛，不是赞美
       reply_type: 0
+  emotion_type: sad
 - keywords: [退网]
   target_authors: ["*"]
   replies:
@@ -146,6 +147,7 @@
   replies:
     - data: '$"网警已进入本群，网警{System.Random.Shared.Next(10_000, 100_000)}已经开始监控本群聊天"'
       reply_type: 1
+  emotion_type: angry
 - keywords: [中国人, 中國人]
   target_authors: ["*"]
   replies:
