@@ -58,6 +58,7 @@ public class Producer
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                _bandClient.RefreshAsync().Wait();
             }
             await Task.Delay(5000);
         }

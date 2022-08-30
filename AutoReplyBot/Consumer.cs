@@ -47,6 +47,7 @@ public class Consumer
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                _bandClient.RefreshAsync().Wait();
             }
         }
     }
