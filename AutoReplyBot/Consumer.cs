@@ -26,7 +26,7 @@ public class Consumer
                 var (comment, content, userNo, userName) = _channel.Take();
                 if (await db.CheckProcessed(comment)) continue;
                 var actions = await _matcher.Match(content, userName);
-                var (bandNo, postNo, commentId, _) = comment;
+                var (bandNo, postNo, commentId, subCommentId) = comment;
                 foreach (var action in actions)
                 {
                     Console.WriteLine($"Now replying {action.ReplyContent} to {bandNo} {postNo} {userName} {content}");
@@ -43,11 +43,18 @@ public class Consumer
                                 await _bandClient.SetEmotionAsync(bandNo, postNo, action.EmotionType);
                             }
                             break;
-                        default:
+                        case (_, _, _, 0):
                             await _bandClient.CreateCommentAsync(bandNo, postNo, commentId, action.ReplyContent, userNo, userName);
                             if (action.EmotionType != null)
                             {
                                 await _bandClient.SetEmotionAsync(bandNo, postNo, commentId, action.EmotionType);
+                            }
+                            break;
+                        default:
+                            await _bandClient.CreateCommentAsync(bandNo, postNo, commentId, action.ReplyContent, userNo, userName);
+                            if (action.EmotionType != null)
+                            {
+                                await _bandClient.SetEmotionAsync(bandNo, postNo, commentId, subCommentId, action.EmotionType);
                             }
                             break;
                     }

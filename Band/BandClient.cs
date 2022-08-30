@@ -134,6 +134,18 @@ public class BandClient : IDisposable
         return PostAsync(uri, form);
     }
 
+    public Task<HttpResponseMessage> SetEmotionAsync(int bandNo, int postNo, int originalCommentId, int commentId, string type)
+    {
+        const string uri = "/v2.0.0/set_emotion";
+        var form = new SetEmotion
+        {
+            BandNo = bandNo,
+            Type = type,
+            ContentKey = new ContentKey { PostNo = postNo, ContentType = "post_comment_comment", OriginalCommentId= originalCommentId, CommentId = commentId }
+        }.ToDictionary();
+        return PostAsync(uri, form);
+    }
+
     public async Task<Comments> GetCommentsAsync(int bandNo, int postNo)
     {
         const string uri = "/v2.3.0/get_comments";

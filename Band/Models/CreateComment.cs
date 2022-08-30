@@ -19,6 +19,7 @@ public class ContentKey
     [JsonPropertyName("content_type")] public string ContentType { get; set; } = "post";
     [JsonPropertyName("post_no")] public required int PostNo { get; set; }
     [JsonPropertyName("comment_id")] public int? CommentId { get; set; }
+    [JsonPropertyName("origin_comment_id")] public int? OriginalCommentId { get; set; }
 
     public override string ToString()
     {
