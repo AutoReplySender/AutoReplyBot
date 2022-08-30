@@ -17,8 +17,8 @@ public class Matcher
         var replies = _rules
             .AsParallel()
             .Where(r => (r.Keywords.Contains("*") ||
-                        (r.IgnoreCase != true && r.Keywords.Any(content.Contains)) ||
-                        (r.IgnoreCase == true && r.Keywords.Any(content.ToLower().Contains))) &&
+                        (r.IgnoreCase != false && r.Keywords.Any(k => content.Contains(k, StringComparison.OrdinalIgnoreCase))) ||
+                        (r.IgnoreCase == false && r.Keywords.Any(content.Contains))) &&
                         (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")) &&
                         (r.TriggerChance == null ||
                         (r.TriggerChance != null && r.TriggerChance > Random.Shared.Next(100))))

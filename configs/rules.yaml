@@ -38,7 +38,6 @@
     - data: 弘扬手冲文化，传承鼠人精神
       reply_type: 0
 - keywords: [test, 测试]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: 理你一下
@@ -68,6 +67,7 @@
     - data: 上上下下左右左右BA
       reply_type: 0
 - keywords: [鸿蒙, 华为, 5G]
+  ignore_case: false
   target_authors: ["*"]
   replies:
     - data: 我们华为真的太厉害了！
@@ -83,7 +83,6 @@
     - data: 看看牛牛
       reply_type: 0
 - keywords: [rip, r.i.p]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: 你别走的太快好不好，身后的小尾巴有点跟不上
@@ -104,7 +103,6 @@
     - data: 爱不爱妈妈？
       reply_type: 0
 - keywords: [明日香, asuka]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: 明日香，你带我走吧，你带我走吧，你带我走吧，你带我走吧，你带我走吧
@@ -115,13 +113,11 @@
     - data: 狗mod和超管比你觉得谁官瘾更大？选狗mod填1，选超管填0
       reply_type: 0
 - keywords: [网警, 晶哥, 我叫王, "my name is wang", 王晶]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: 你好我叫王，我今年45岁，我是在美国出生和长大的华裔美国人，请你给我发一张你的照片吗？我想看看和谁聊天
       reply_type: 0
 - keywords: ["good bot", goodbot]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: bot麻了，bot需要牛牛，不是赞美
@@ -146,7 +142,6 @@
     - data: 一个人给了少年一件大衣，随着少年越长越大，那件大衣也越来越大，臭蛆oil做事有始无终
       reply_type: 0
 - keywords: ["bad bot", badbot]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: '$"网警已进入本群，网警{System.Random.Shared.Next(10_000, 100_000)}已经开始监控本群聊天"'
@@ -348,7 +343,6 @@
     - data: 好死，开香槟咯🍾🍾🍾
       reply_type: 0
 - keywords: [狗mod]
-  ignore_case: true
   target_authors: ["*"]
   replies:
     - data: 你每点该回复一个赞，你就将狗mod的寿命缩短了0.1秒！
