@@ -91,7 +91,7 @@ public class BandClient : IDisposable
         var form = new CreateComment
         {
             BandNo = bandNo,
-            Body = $"{body}\n{Suffix}",
+            Body = $"{body}\n\n{Suffix}",
             ContentKey = new ContentKey {PostNo = postNo}
         }.ToDictionary();
         return PostAsync(uri, form);
