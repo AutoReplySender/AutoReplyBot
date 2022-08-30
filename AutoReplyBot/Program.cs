@@ -83,7 +83,8 @@ class Program
         }
         else
         {
-            cookies = await File.ReadAllTextAsync("configs/saved.cookies");
+            // remove \n, \r 
+            cookies = (await File.ReadAllTextAsync("configs/saved.cookies")).Trim();
         }
 
         var client = InitBandClient(cookies, proxy);

@@ -18,7 +18,7 @@ bot 使用的各项配置文件保存在 `config` 文件夹下。
       reply_type: 0 # 0代表正常文本，1代表需要求值的C#表达式
     - data: 回复文本二
       reply_type: 0
-  ignore_case: false # 可选，设置为false时关键词不区分大小写，默认区分大小写
+  ignore_case: false # 可选，设置为false时关键词区分大小写，默认不区分大小写
   trigger_chance: 100 # 可选，满足触发条件时触发bot的概率的百分数，默认为100%触发
 ```
 
@@ -43,7 +43,6 @@ bot 使用的各项配置文件保存在 `config` 文件夹下。
 ### 浏览器 cookie 保存：`saved.cookies`
 
 bot 保存的浏览器 cookie，预先准备好此文件则无需使用邮箱、密码登录。要获取 cookie，请使用 chrome 浏览器登录 BAND 并勾选“记住登录”，之后访问 auth.band.us，在浏览器开发者工具—控制台中输入 `document.cookie` 获得 cookie 字符串，将其保存即可。整个字符串的开头和结尾不要加引号。
-
 ## 环境配置
 
 编译本 bot 的源代码需要安装 [dotnet SDK](https://dotnet.microsoft.com/en-us/download)，版本为7.0。
