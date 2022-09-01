@@ -47,6 +47,7 @@
   replies:
     - data: 我求求你们别舔集美了可以吗？像个小学生一样，舔又舔不到，只能无能狂怒了，没有集美活不下去了是吧，那么喜欢集美能直接去开个小号和集美玩吗
       reply_type: 0
+  trigger_chance: 50
 - keywords: [大的来了, 大的來了, 大的来了, 大的要来了, 大的要來了]
   target_authors: ["*"]
   replies:
@@ -153,6 +154,9 @@
   replies:
     - data: 哔哔，你说中国人你冒犯到了我了你知道吗
       reply_type: 0
+    - data: 你才是中国人，你全家都是中国人！
+      reply_type: 0
+  trigger_chance: 50
 - keywords: [大逼, 人人插]
   target_authors: ["*"]
   replies:
