@@ -26,6 +26,7 @@ public class Consumer
                 var (comment, content, userNo, userName) = _channel.Take();
                 if (await db.CheckProcessed(comment)) continue;
                 var actions = await _matcher.Match(content, userName);
+                if (actions.Length == 0) continue;
                 var (bandNo, postNo, commentId, subCommentId) = comment;
                 var reply = string.Join("\n\n", actions.Select(a => a.ReplyContent));
                 var emotion = actions.FirstOrDefault(a => a.EmotionType != null)?.EmotionType;
