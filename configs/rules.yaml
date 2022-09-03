@@ -3,12 +3,12 @@
   replies:
     - data: 三次元？狗都不看！
       reply_type: 0
-- keywords: [求个种, 求种]
+- keywords: [求个种, 求种, 求種]
   target_authors: ["*"]
   replies:
     - data: 同求，裤子都脱了，急
       reply_type: 0
-- keywords: [撸]
+- keywords: [撸, 打手槍, 擼]
   target_authors: ["*"]
   replies:
     - data: 多撸我只能说
@@ -22,7 +22,7 @@
       reply_type: 0
     - data: 我的牛子是渗氮钢材料的，延展性好
       reply_type: 0
-- keywords: [晚安, 好梦]
+- keywords: [晚安, 好梦, 好夢]
   target_authors: ["*"]
   replies:
     - data: 晚安，睡大觉了zzz
@@ -37,21 +37,29 @@
   replies:
     - data: 弘扬手冲文化，传承鼠人精神
       reply_type: 0
-- keywords: [test, 测试]
+- keywords: [test, 测试, 測試]
   target_authors: ["*"]
   replies:
     - data: 理你一下
       reply_type: 0
-- keywords: [集美, 织女]
+- keywords: [集美, 织女, 織女, 支女]
   target_authors: ["*"]
   replies:
     - data: 我求求你们别舔集美了可以吗？像个小学生一样，舔又舔不到，只能无能狂怒了，没有集美活不下去了是吧，那么喜欢集美能直接去开个小号和集美玩吗
       reply_type: 0
+    - data: 本bot宣布本组是舔狗TV，没织女不转了！
+      reply_type: 0
+    - data: 10分钟之内不聊集美本bot原地自杀
+      reply_type: 0
   trigger_chance: 50
-- keywords: [大的来了, 大的來了, 大的来了, 大的要来了, 大的要來了]
+- keywords: [大的来了, 大的來了, 大的要来了, 大的要來了]
   target_authors: ["*"]
   replies:
     - data: 《大的来了》是荒诞戏剧的代表作。以几个鼠人苦等“大的”，而“大的”不来的情节，喻示人生是一场无尽无望的等待，表达了世界荒诞、人生痛苦的存在主义思想。它发生的时间地点都是模糊的，布景也是一片荒凉，他们一边等，一边用各种无意义的手段打发时光。他们经常显得头脑一片混乱，缺乏思维能力，尤其是极度地惧怕孤独。当有人询问“大的代表什么”时，鼠人们说：“我要是知道，早就说出来了。”
+      reply_type: 0
+    - data: 《大的来了》是荒诞戏剧的代表作。以几个鼠人苦等“大的”，而“大的”不来的情节，喻示人生是一场无尽无望的等待，表达了世界荒诞、人生痛苦的存在主义思想。它发生的时间地点都是模糊的，布景也是一片荒凉，他们一边等，一边用各种无意义的手段打发时光。他们经常显得头脑一片混乱，缺乏思维能力，尤其是极度地惧怕孤独。当有人询问“大的代表什么”时，鼠人们说：“我不好说，我擦。”
+      reply_type: 0
+    - data: 《大的来了》是荒诞戏剧的代表作。以几个鼠人苦等“大的”，而“大的”不来的情节，喻示人生是一场无尽无望的等待，表达了世界荒诞、人生痛苦的存在主义思想。它发生的时间地点都是模糊的，布景也是一片荒凉，他们一边等，一边用各种无意义的手段打发时光。他们经常显得头脑一片混乱，缺乏思维能力，尤其是极度地惧怕孤独。当有人询问“大的代表什么”时，鼠人们说：“我擦，我不好说。”
       reply_type: 0
     - data: 我大你吗了个逼来了！
       reply_type: 0
@@ -65,13 +73,13 @@
   replies:
     - data: 上上下下左右左右BA
       reply_type: 0
-- keywords: [鸿蒙, 华为, 5G]
+- keywords: [鸿蒙, 鴻蒙, 华为, 華為, 5G]
   ignore_case: false
   target_authors: ["*"]
   replies:
     - data: 我们华为真的太厉害了！
       reply_type: 0
-- keywords: [金木的]
+- keywords: [金木的, 二刺螈, 二次元, 动漫]
   target_authors: ["*"]
   replies:
     - data: 我还是那句话，小学生闭嘴，没看过东京食尸鬼看十遍再来和我辩，除了罪恶王冠我还没见过能超越食尸鬼的作品，你们能体会金木的痛吗！
@@ -96,7 +104,7 @@
   replies:
     - data: 有1吗？
       reply_type: 0
-- keywords: [你妈, 你的妈, 是妈妈, 妈妈吗]
+- keywords: [你妈, 你的妈, 是妈妈, 妈妈吗, 你媽, 你的媽, 是媽媽, 媽媽嗎, 白媽媽, 白妈妈]
   target_authors: ["*"]
   replies:
     - data: 爱不爱妈妈？
@@ -109,9 +117,9 @@
 - keywords: [官瘾]
   target_authors: ["*"]
   replies:
-    - data: 狗mod和超管比你觉得谁官瘾更大？选狗mod填1，选超管填0
+    - data: 狗团长和超管比你觉得谁官瘾更大？选狗团长填1，选超管填0
       reply_type: 0
-- keywords: [网警, 晶哥, 我叫王, "my name is wang", 王晶]
+- keywords: [网警, 網警, 晶哥, 我叫王, "my name is wang", 王晶]
   target_authors: ["*"]
   replies:
     - data: 你好我叫王，我今年45岁，我是在美国出生和长大的华裔美国人，请你给我发一张你的照片吗？我想看看和谁聊天
@@ -122,7 +130,7 @@
     - data: bot麻了，bot需要牛牛，不是赞美
       reply_type: 0
   emotion_type: sad
-- keywords: [退网]
+- keywords: [退网, 退網]
   target_authors: ["*"]
   replies:
     - data: 别走，地球没你不转了
@@ -146,6 +154,8 @@
   replies:
     - data: '$"网警已进入本群，网警{System.Random.Shared.Next(10_000, 100_000)}已经开始监控本群聊天"'
       reply_type: 1
+    - data: 怎么说话呢？没有素质的东西！
+      reply_type: 0
   emotion_type: angry
 - keywords: [中国人, 中國人]
   target_authors: ["*"]
@@ -199,6 +209,8 @@
       reply_type: 0
     - data: 这下忠咧！太忠咧！
       reply_type: 0
+    - data: 靠嫩娘，偷井盖咯，靠嫩娘
+      reply_type: 0
 - keywords: [海鲜批]
   target_authors: ["*"]
   replies:
@@ -209,10 +221,20 @@
   replies:
     - data: 贵州和广西相比zap那我还是觉得我们广西牛批zap
       reply_type: 0
-- keywords: [东北]
+- keywords: [东北, 東北, 東百, 东百]
   target_authors: ["*"]
   replies:
     - data: 我要把你炖在铁锅炖里，因为我是浪漫的东北壬！
+      reply_type: 0
+  replies:
+    - data: 东北人需要黑吗？当年东北国企下岗潮多少东北人坑东北人把女人骗到法国卖的！海外第一躲着东北人，第二福建人，第三温州人。
+      reply_type: 0
+  replies:
+    - data: 今天朋友跟我抱怨说单位的同事是东北人，特别没有素质，简直就是土狗🐶，如果许愿能实现的话我想许愿让他们都去非洲，我们也好清净清净。我说这样不好吧，非洲人有三宝，音乐，舞蹈和大吊，东北人什么都没有只有低俗的段子和小丑一样的口音。
+      reply_type: 0
+- keywords: [满洲, 滿洲]
+  replies:
+    - data: 满洲人需要黑吗？当年满洲国企下岗潮多少满洲人坑满洲人把女人骗到法国卖的！海外第一躲着满洲人，第二汉人，第三蒙古人。
       reply_type: 0
 - keywords: [北京人, 百京人]
   target_authors: ["*"]
@@ -306,6 +328,8 @@
   replies:
     - data: 不是啦，我是派大星！
       reply_type: 0
+    - data: 你说的是哪个S蛆？Sager吗？
+      reply_type: 0
 - keywords: [你以为你很幽默]
   target_authors: ["*"]
   replies:
@@ -326,6 +350,12 @@
   replies:
     - data: 现在r/chonglangtv的那群迪友属于是傻逼中的傻逼，其弱智程度不亚于推特中文圈的民小，原创内容基本没有，节目效果也没有，甚至于深度和广度都一点没有，十年前的东西一遍又一遍地发，连葱轮都不如，葱轮好歹还会装模作样的分析一下社会经济，或者扯点别的有的没的的东西，迪友则是除了复读支言支语以外啥也不会。不得不说r/chonglangtv退行是必然的，冲浪在某种意义上玩的就是真实，而当浪人只是在赛博垃圾场捡垃圾吃时，其自然就退化成迪友了，感谢他sub的mod如此有自知之明，还整出来一个专有名词，算是最后还做出了一点贡献
       reply_type: 0
+- keywords: [绷友, 繃友]
+  target_authors: ["*"]
+  replies:
+    - data: 现在BAND的那群绷友属于是傻逼中的傻逼，其弱智程度不亚于推特中文圈的民小，原创内容基本没有，节目效果也没有，甚至于深度和广度都一点没有，十年前的东西一遍又一遍地发，连葱轮都不如，葱轮好歹还会装模作样的分析一下社会经济，或者扯点别的有的没的的东西，绷友则是除了复读支言支语以外啥也不会。不得不说BAND退行是必然的，冲浪在某种意义上玩的就是真实，而当迪友只是在赛博垃圾场捡垃圾吃时，其自然就退化成绷友了，感谢他团组的团长如此有自知之明，还整出来一个专有名词，算是最后还做出了一点贡献
+      reply_type: 0
+  trigger_chance: 50
 - keywords: [cltv的民主]
   target_authors: ["*"]
   replies:
@@ -346,10 +376,10 @@
   replies:
     - data: 好死，开香槟咯🍾🍾🍾
       reply_type: 0
-- keywords: [狗mod]
+- keywords: [狗mod, 狗团长]
   target_authors: ["*"]
   replies:
-    - data: 你每点该回复一个赞，你就将狗mod的寿命缩短了0.1秒！
+    - data: 你每点该回复一个赞，你就将狗团长的寿命缩短了0.1秒！
       reply_type: 0
 - keywords: [脱脂, 脱支]
   target_authors: ["*"]
@@ -400,12 +430,13 @@
     - data: 中国国情不一样。中国国民是生产者，官僚资本家获利只能压榨本国百姓，还没本事剥削其他人，而百姓不是傻子，一定会反抗。还有过去一两百年以来汉奸或者危害国家利益，买办们过的太好了。甚至被认为做买办为洋人利益服务才是正道。而老百姓一定不是傻子，一定会反抗，所以中国的矛盾会比美国大很多。等狗汉奸不能获得一毛钱好处的时代，你主观感受就会感觉共产党制度好。实际上利益主义者从来没改变过。
       reply_type: 0
   trigger_chance: 50
+  emotion_type: angry
 - keywords: [支那人, 支那猪]
   target_authors: ["*"]
   replies:
     - data: 现在流行说这个了，被人保着呢，先狂一狂
       reply_type: 0
-- keywords: [习近平, 包子, 包帝, 庆丰]
+- keywords: [习近平, 包子, 包帝, 庆丰, 慶豐, 習近平 ]
   target_authors: ["*"]
   replies:
     - data: 对，我回来了，巫龜。从终以犞，你长䨒今我习王。跫㚄，这里是我的习土。
@@ -414,5 +445,51 @@
       reply_type: 0
     - data: 因为我那个时候扛200斤麦子，十里山路我不换肩。
       reply_type: 0
-
-
+    - data: 天行健，君子以不强自息。
+      reply_type: 0
+    - data: 共同绘制精细……精甚细腻的工笔画。
+      reply_type: 0
+    - data: 我们过去讲，既要绿水青山，又要金山银山。其实，绿水青山就是金山银山。
+      reply_type: 0
+    - data: 有些吃饱了没事干的外国人，对我们的事情指手划脚。中国一不输出革命，二不输出饥饿和贫困，三不去折腾你们，还有什么好说的？
+      reply_type: 0
+    - data: 别看你今天闹得欢，小心啊今后拉清单、头上三尺有神明，一定要有敬畏之心。
+      reply_type: 0
+    - data: 有的人已经到了肆无忌惮、胆大妄为的地步！
+      reply_type: 0
+    - data: 后来我就想了一个，今天做到12点，就不做了睡大觉。
+      reply_type: 0
+    - data: 中国人均国内生产总值接近八千，万，美元。
+      reply_type: 0
+    - data: 对这一次的疫情防控工作，我一直是在亲自指挥，亲自部署。
+      reply_type: 0
+    - data: 传承了《萨格尔王》《玛纳斯》《江格尔》等，震撼人心的伟大史诗。
+      reply_type: 0
+    - data: 金砖合作之所以得到快速发展，不仅在于找准了合作之道，关键是在于找准了合作之道。
+      reply_type: 0
+    - data: 注重在基层一线和艰难困…艰…艰困难…艰苦的地方培养锻炼青年干部。
+      reply_type: 0
+    - data: 疯狂宇宙可以掀翻小池塘，但不能掀翻大海。
+      reply_type: 0
+    - data: 中国不以追求贸易逆差为目标。
+      reply_type: 0
+- keywords: [突开沼气池]
+  target_authors: ["*"]
+  replies:
+    - data: 最后一捅开溅得我满脸喷粪啊。
+      reply_type: 0
+- keywords: [权了, 开权, 權了, 開權, 权人]
+  target_authors: ["*"]
+  replies:
+    - data: 你看你還能說話嗎？
+      reply_type: 0
+- keywords: [引流狗, 资历, 红老嗨]
+  target_authors: ["*"]
+  replies:
+    - data: 引流土狗，发不出资历今晚
+      reply_type: 0
+- keywords: [习下]
+  target_authors: ["*"]
+  replies:
+    - data: 习下我上！
+      reply_type: 0
