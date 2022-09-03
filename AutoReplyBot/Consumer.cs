@@ -26,8 +26,11 @@ public class Consumer
                 var (comment, content, userNo, userName) = _channel.Take();
                 if (await db.CheckProcessed(comment)) continue;
                 var actions = await _matcher.Match(content, userName);
+                // if no action is triggered, skip the comment so it may still trigger our bot after editing.
+                if (actions.Length == 0) continue;
                 actions = actions.Where(r => (r.TriggerChance == null ||
                         (r.TriggerChance != null && r.TriggerChance > Random.Shared.Next(100)))).ToArray();
+                // if actions are triggered, but are randomly discarded, then it should never trigger the bot again.
                 if (actions.Length == 0)
                 {
                     db.Add(comment);
