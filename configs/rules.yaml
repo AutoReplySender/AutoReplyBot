@@ -405,3 +405,14 @@
   replies:
     - data: 现在流行说这个了，被人保着呢，先狂一狂
       reply_type: 0
+- keywords: [习近平, 包子, 包帝, 庆丰]
+  target_authors: ["*"]
+  replies:
+    - data: 对，我回来了，巫龜。从终以犞，你长䨒今我习王。跫㚄，这里是我的习土。
+      reply_type: 0
+    - data: 轻关易道，通商宽衣。
+      reply_type: 0
+    - data: 因为我那个时候扛200斤麦子，十里山路我不换肩。
+      reply_type: 0
+
+
