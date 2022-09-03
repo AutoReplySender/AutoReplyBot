@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using Band;
+using Band.Models.Feed;
 
 namespace AutoReplyBot;
 
@@ -25,6 +26,8 @@ public class Producer
                 var feed = await _bandClient.GetFeedAsync();
                 foreach (var post in feed.Items.Select(i => i.Post))
                 {
+                    // photo_album_compaction may appear in feed and shouldn't be checked.
+                    if (post.Band == null) continue;
                     var bandNo = post.Band.BandNo;
                     var postNo = post.PostNo;
                     {
