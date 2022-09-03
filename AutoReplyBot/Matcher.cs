@@ -13,13 +13,15 @@ public class Matcher
 
     public class Action
     {
-        public Action(string replyContent, string? emotionType)
+        public Action(string replyContent, string? emotionType, int? triggerChance)
         {
             ReplyContent = replyContent;
             EmotionType = emotionType;
+            TriggerChance = triggerChance;
         }
         public string ReplyContent { get; set; }
         public string? EmotionType { get; set; }
+        public int? TriggerChance { get; set; }
     }
 
     public Task<Action[]> Match(string content, string userName)
@@ -30,17 +32,15 @@ public class Matcher
             .Where(r => (r.Keywords.Contains("*") ||
                         (r.IgnoreCase != false && r.Keywords.Any(k => content.Contains(k, StringComparison.OrdinalIgnoreCase))) ||
                         (r.IgnoreCase == false && r.Keywords.Any(content.Contains))) &&
-                        (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")) &&
-                        (r.TriggerChance == null ||
-                        (r.TriggerChance != null && r.TriggerChance > Random.Shared.Next(100))))
+                        (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")))
             .Take(_takes)
             .Select(async r =>
             {
                 var reply = r.Replies[Random.Shared.Next(r.Replies.Count)];
                 return reply.ReplyType switch
                 {
-                    ReplyType.PlainText => new Action(reply.Data.Trim(), r.EmotionType),
-                    ReplyType.CSharpScript => new Action(await Script.Eval(reply.Data.Trim()), r.EmotionType),
+                    ReplyType.PlainText => new Action(reply.Data.Trim(), r.EmotionType, r.TriggerChance),
+                    ReplyType.CSharpScript => new Action(await Script.Eval(reply.Data.Trim()), r.EmotionType, r.TriggerChance),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             });

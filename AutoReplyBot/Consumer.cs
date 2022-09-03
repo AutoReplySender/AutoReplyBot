@@ -26,7 +26,14 @@ public class Consumer
                 var (comment, content, userNo, userName) = _channel.Take();
                 if (await db.CheckProcessed(comment)) continue;
                 var actions = await _matcher.Match(content, userName);
-                if (actions.Length == 0) continue;
+                actions = actions.Where(r => (r.TriggerChance == null ||
+                        (r.TriggerChance != null && r.TriggerChance > Random.Shared.Next(100)))).ToArray();
+                if (actions.Length == 0)
+                {
+                    db.Add(comment);
+                    await db.SaveChangesAsync();
+                    continue;
+                }
                 var (bandNo, postNo, commentId, subCommentId) = comment;
                 var reply = string.Join("\n\n", actions.Select(a => a.ReplyContent));
                 var emotion = actions.FirstOrDefault(a => a.EmotionType != null)?.EmotionType;
@@ -36,7 +43,6 @@ public class Consumer
                     Console.WriteLine(
                         $"Adding Emotion {emotion} to {bandNo} {postNo} {userName} {content}");
                 }
-
                 switch (comment)
                 {
                     case (_, _, 0, 0):
