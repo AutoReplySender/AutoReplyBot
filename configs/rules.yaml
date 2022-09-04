@@ -84,7 +84,7 @@
   replies:
     - data: 我还是那句话，小学生闭嘴，没看过东京食尸鬼看十遍再来和我辩，除了罪恶王冠我还没见过能超越食尸鬼的作品，你们能体会金木的痛吗！
       reply_type: 0
-      trigger_chance: 50
+  trigger_chance: 50
 - keywords: [嗯了, 硬了, 牛子妹妹, 看看牛, 看看你, 给我看]
   target_authors: ["*"]
   replies:
@@ -438,7 +438,7 @@
   replies:
     - data: 现在流行说这个了，被人保着呢，先狂一狂
       reply_type: 0
-      trigger_chance: 33
+  trigger_chance: 33
 # 习近平语录
 - keywords: [习近平, 包子, 包帝, 庆丰, 慶豐, 習近平, 习禁平, 细颈瓶, 瓶子, 平子, 维尼, 維尼]
   target_authors: ["*"]
