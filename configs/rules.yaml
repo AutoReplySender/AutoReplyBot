@@ -578,10 +578,15 @@
   target_authors: ["*"]
   replies:
     - data: 嗯嗯
+      reply_type: 0
     - data: 弱爆了
+      reply_type: 0
     - data: 不鸟你
+      reply_type: 0
     - data: 你烦
+      reply_type: 0
     - data: 在干嘛
+      reply_type: 0
     - data: 嘛
       reply_type: 0
 
