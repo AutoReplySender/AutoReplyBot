@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace AutoReplyBot;
 
 public class Matcher
@@ -26,6 +28,15 @@ public class Matcher
 
     public Task<Action[]> Match(string content, string userName)
     {
+        // throw away @username when matching
+        try
+        {
+            content = Regex.Replace(content, @"<band:refer[^>]*>[^<]*</band:refer>", "");
+        }
+        catch (RegexMatchTimeoutException e)
+        {
+            Console.WriteLine(e);
+        }
         if (content.Contains("I am a bot")) return Task.FromResult(Array.Empty<Action>());
         var actions = _rules
             .AsParallel()
