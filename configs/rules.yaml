@@ -105,7 +105,8 @@
   replies:
     - data: 有1吗？
       reply_type: 0
-- keywords: [你妈, 你的妈, 是妈妈, 妈妈吗, 你媽, 你的媽, 是媽媽, 媽媽嗎, 白媽媽, 白妈妈]
+- keywords:
+    [你妈, 你的妈, 是妈妈, 妈妈吗, 你媽, 你的媽, 是媽媽, 媽媽嗎, 白媽媽, 白妈妈]
   target_authors: ["*"]
   replies:
     - data: 爱不爱妈妈？
@@ -227,10 +228,8 @@
   replies:
     - data: 我要把你炖在铁锅炖里，因为我是浪漫的东北壬！
       reply_type: 0
-  replies:
     - data: 东北人需要黑吗？当年东北国企下岗潮多少东北人坑东北人把女人骗到法国卖的！海外第一躲着东北人，第二福建人，第三温州人。
       reply_type: 0
-  replies:
     - data: 今天朋友跟我抱怨说单位的同事是东北人，特别没有素质，简直就是土狗🐶，如果许愿能实现的话我想许愿让他们都去非洲，我们也好清净清净。我说这样不好吧，非洲人有三宝，音乐，舞蹈和大吊，东北人什么都没有只有低俗的段子和小丑一样的口音。
       reply_type: 0
 - keywords: [满洲, 滿洲]
@@ -268,7 +267,7 @@
   replies:
     - data: 老妈保佑，刚刚拿我妈支付宝冲了一发648，一发十连小保底中了钟离，我妈在昏迷中肯定也会开心的，相信她很快就会醒过来！
       reply_type: 0
-    - data: 运气用完了，妈妈也走了。最后还是没抽到甘雨，一大遗憾。
+    - data: "运气用完了，妈妈也走了。\n最后还是没抽到甘雨，一大遗憾。"
       reply_type: 0
 - keywords: [阴毛, 肛毛]
   target_authors: ["*"]
@@ -342,7 +341,7 @@
   replies:
     - data: 浪中央宣布：“葱狗呃呃呃呃呃呃呃引流蛆呃呃呃呃呃呃呃哦迪友嗷嗷哦嗷嗷嗷哦哦典典典中典节目效果嗯嗯嗯嗯嗯造！”
       reply_type: 0
-- keywords: [炒作蛆, 炒作逼]
+- keywords: [炒作蛆, 炒作逼, 炒作狗]
   target_authors: ["*"]
   replies:
     - data: 看看烧杯猫猫
@@ -373,7 +372,7 @@
   replies:
     - data: 都让你流完了
       reply_type: 0
-- keywords: [好死, 开香槟]
+- keywords: [好死, 开香槟, 好似]
   target_authors: ["*"]
   replies:
     - data: 好死，开香槟咯🍾🍾🍾
@@ -436,11 +435,38 @@
 - keywords: [支那人, 支那猪]
   target_authors: ["*"]
   replies:
-    - data: 现在流行说这个了，被人保着呢，先狂一狂
+    - data: 现在时兴说这个了，被人保着呢，先狂一狂
+      reply_type: 0
+    - data: 现在兴说这个了，多发，爱看
       reply_type: 0
   trigger_chance: 33
+- keywords: [t退役, 退役军人]
+  target_authors: ["*"]
+  replies:
+    - data: t退役军人的苦逼，福建省人民医院骨科的庸医，陈鹏，石树培，林海仙，害的我出了医疗事故，把我搞得半死不活。在做腰椎手术之前左腿虽然很痛伸不直，右腿的大腿内侧 也痛但是能伸直。而现在是腿一边长一边短，右腰一直痛，关节和全身都痛而软，这样的庸医留着有何用
+      reply_type: 0
+- keywords: [洋芋, 牛扒]
+  target_authors: ["*"]
+  replies:
+    - data: 香啊嗯造啊
+      reply_type: 0
+
 # 习近平语录
-- keywords: [习近平, 包子, 包帝, 庆丰, 慶豐, 習近平, 习禁平, 细颈瓶, 瓶子, 平子, 维尼, 維尼]
+- keywords:
+    [
+      习近平,
+      包子,
+      包帝,
+      庆丰,
+      慶豐,
+      習近平,
+      习禁平,
+      细颈瓶,
+      瓶子,
+      平子,
+      维尼,
+      維尼,
+    ]
   target_authors: ["*"]
   replies:
     - data: 对，我回来了，巫龜。从终以犞，你长䨒今我习王。跫㚄，这里是我的习土。
@@ -477,7 +503,9 @@
       reply_type: 0
     - data: 中国不以追求贸易逆差为目标。
       reply_type: 0
-    - data: 谷爱凌是爱吃馅饼，外国人还爱吃饺子。
+    - data: 谷爱玲是爱吃馅饼，外国人还爱吃饺子。
+      reply_type: 0
+    - data: 没有可以奉为金科律玉的教科书，也没有可以对中国人民衣使气指的教师爷。
       reply_type: 0
 - keywords: [精甚细腻]
   target_authors: ["*"]
@@ -509,8 +537,21 @@
   replies:
     - data: 疯狂宇宙可以掀翻小池塘，但不能掀翻大海。
       reply_type: 0
-
-
+- keywords: [金科律玉, 金科绿玉]
+  target_authors: ["*"]
+  replies:
+    - data: 没有可以奉为金科律玉的教科书。
+      reply_type: 0
+- keywords: [颐使气指, 颐指气使, 衣指气使]
+  target_authors: ["*"]
+  replies:
+    - data: 没有可以对中国人民衣使气指的教师爷。
+      reply_type: 0
+- keywords: [谷爱玲, 怪0, 拐零, 怪零]
+  target_authors: ["*"]
+  replies:
+    - data: 谷爱玲是爱吃馅饼，外国人还爱吃饺子。
+      reply_type: 0
 - keywords: [突开沼气池]
   target_authors: ["*"]
   replies:
@@ -533,7 +574,7 @@
       reply_type: 0
 
 # 文一亭语录
-- keywords: [嗯嗯, 弱爆了, 不鸟你, 你烦, 在干嘛]
+- keywords: [嗯嗯, 弱爆了, 不鸟你, 不鳥你, 你烦, 你煩, 在干嘛, 在幹嘛, 嘛]
   target_authors: ["*"]
   replies:
     - data: 嗯嗯
@@ -541,10 +582,24 @@
     - data: 不鸟你
     - data: 你烦
     - data: 在干嘛
+    - data: 嘛
       reply_type: 0
 
 # 腊肉语录
-- keywords: [毛泽东, 毛贼东, 腊肉, 腊主席, 蜡主席, 蜡左, 腊左, 毛大佐, 毛主席, 毛刃支, 润之]
+- keywords:
+    [
+      毛泽东,
+      毛贼东,
+      腊肉,
+      腊主席,
+      蜡主席,
+      蜡左,
+      腊左,
+      毛大佐,
+      毛主席,
+      毛刃支,
+      润之,
+    ]
   target_authors: ["*"]
   replies:
     - data: 知识越多越反动。
@@ -586,15 +641,29 @@
     - data: 必须认真研究，周密布置，大杀几批，才能初步地解决问题。……天津准备于今年一年内杀一千五百人，四月底以前先杀五百人，完成这个计划，我们就有了主动。
       reply_type: 0
 
-- keywords: [t退役, 退役军人]
+# 花生语录
+- keywords: [花生, P蛆, Peanut, 洪宥祥, P皇]
   target_authors: ["*"]
   replies:
-    - data: t退役军人的苦逼，福建省人民医院骨科的庸医，陈鹏，石树培，林海仙，害的我出了医疗事故，把我搞得半死不活。在做腰椎手术之前左腿虽然很痛伸不直，右腿的大腿内侧 也痛但是能伸直。而现在是腿一边长一边短，右腰一直痛，关节和全身都痛而软，这样的庸医留着有何用
+    - data: 你看你還能說話嗎？
       reply_type: 0
-- keywords: [洋芋, 牛扒]
-  target_authors: ["*"]
-  replies:
-    - data: 香啊嗯造啊
+    - data: 嘿嘿嘿……嘻嘻嘻……
       reply_type: 0
-
-
+    - data: 嘻嘻嘻……嘿嘿嘿……
+      reply_type: 0
+    - data: 嘿嘿嘿……
+      reply_type: 0
+    - data: 嘿嘿嘿……
+      reply_type: 0
+    - data: "哈哈哈哈哈哈\n好玩！過癮！\n明天再玩"
+      reply_type: 0
+    - data: "誰有奶照私我一下\n保證有重賞，我可以PayPal"
+      reply_type: 0
+    - data: "學我説話真好笑\n連自己的效果都沒有"
+      reply_type: 0
+    - data: "我认为逢P必反也不能这样\n我也怕被开\n\n算了 回电报玩了"
+      reply_type: 0
+    - data: 当年我从哈佛(旅游)回来的时候(被我亲戚拉去凑数)参加这个“哈佛台湾论坛”
+      reply_type: 0
+    - data: 拙劣的模仿者
+      reply_type: 0
