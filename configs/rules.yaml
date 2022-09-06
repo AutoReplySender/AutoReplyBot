@@ -213,7 +213,7 @@
       reply_type: 0
     - data: 靠嫩娘，偷井盖咯，靠嫩娘
       reply_type: 0
-- keywords: [海鲜批]
+- keywords: [海鲜批, 海鲜逼]
   target_authors: ["*"]
   replies:
     - data: "它有个海鲜批\n当它去Lady M时，白带可以当吞拿酱\n当它吃巧克力可颂时，可以拿牛角自慰\n当它吃火锅时，淫水可以当汤底\n老中医让它忌口，它却说不用忌批\n无论它是鲑鱼味批还是沙丁味批\n它可以发黑发霉，也可以是迪奭尼在逃鲱鱼批\n幸好，它有个海鲜批"
@@ -289,7 +289,7 @@
   replies:
     - data: 嗦开嗦开，殒男仁来喽~！云南仁我云南神，云南二字可听闻，如诺动我云南仁，我们必定要你魂，云南山我云南水，云南菇娘是真美，云南树云南路，云南小伙都很酷，我哨你们都听闻，云南好客敢称神，云南风景美如画，来到这里战叱岁，如果你是云南仁，双击关注一起行，然后一起扣个爸，快手热门把他夸，顺便猪你一路发！
       reply_type: 0
-- keywords: [加我微信, 加微信]
+- keywords: [加我微信, 加微信, 加vx]
   target_authors: ["*"]
   replies:
     - data: 晶哥你可别价别jo我啾我尿我这么大岁数了我哎哟窝窝窝求求你摇了窝吧
@@ -351,6 +351,7 @@
   replies:
     - data: 现在r/chonglangtv的那群迪友属于是傻逼中的傻逼，其弱智程度不亚于推特中文圈的民小，原创内容基本没有，节目效果也没有，甚至于深度和广度都一点没有，十年前的东西一遍又一遍地发，连葱轮都不如，葱轮好歹还会装模作样的分析一下社会经济，或者扯点别的有的没的的东西，迪友则是除了复读支言支语以外啥也不会。不得不说r/chonglangtv退行是必然的，冲浪在某种意义上玩的就是真实，而当浪人只是在赛博垃圾场捡垃圾吃时，其自然就退化成迪友了，感谢他sub的mod如此有自知之明，还整出来一个专有名词，算是最后还做出了一点贡献
       reply_type: 0
+  trigger_chance: 50
 - keywords: [绷友, 繃友]
   target_authors: ["*"]
   replies:
@@ -460,7 +461,7 @@
       庆丰,
       慶豐,
       習近平,
-      习禁平,
+      习禁评,
       细颈瓶,
       瓶子,
       平子,
@@ -547,7 +548,7 @@
   replies:
     - data: 没有可以对中国人民衣使气指的教师爷。
       reply_type: 0
-- keywords: [谷爱玲, 怪0, 拐零, 怪零]
+- keywords: [谷爱玲, 怪0, 拐零, 怪零, 谷爱凌, 拐0]
   target_authors: ["*"]
   replies:
     - data: 谷爱玲是爱吃馅饼，外国人还爱吃饺子。
@@ -589,6 +590,7 @@
 - keywords:
     [
       毛泽东,
+      毛澤東
       毛贼东,
       腊肉,
       腊主席,
@@ -640,6 +642,90 @@
       reply_type: 0
     - data: 必须认真研究，周密布置，大杀几批，才能初步地解决问题。……天津准备于今年一年内杀一千五百人，四月底以前先杀五百人，完成这个计划，我们就有了主动。
       reply_type: 0
+
+# 蛤蟆语录
+- keywords: 
+    [
+      蛤蟆, 
+      江泽民, 
+      江澤民, 
+      膜蛤, 
+      褲腰帶, 
+      裤腰带, 
+      黑框眼镜, 
+      黑框眼鏡, 
+    ]
+  target_authors: ["*"]
+  replies:
+    - data: 吼啊！
+      reply_type: 0
+    - data: 你们媒体千万要注意啊，不要“见着风是得雨”啊，接到这些消息，你媒体本身也要判断，明白这意思吧？ 假使一些完全无中生有的东西，你再帮他说一遍，你等于……你也有责任吧？
+      reply_type: 0
+    - data: 刚才你问我啊，我可以回答你一句“无可奉告”，你们又不高兴，那怎么办？
+      reply_type: 0
+    - data: 还是按照香港的基本法、按照选举的法去产生。
+      reply_type: 0
+    - data: 你问我资瓷不资瓷，我说资瓷。
+      reply_type: 0
+    - data: 你们毕竟还too young。我是身经百战了，见得多了！西方的哪一个国家我没去过？
+      reply_type: 0
+    - data: 你们啊，不要想弄个大新闻，再把我批判一番。
+      reply_type: 0
+    - data: 你们要知道，美国的华莱士，那比你们不知道高到哪里去啦。我跟他谈笑风生！所以说媒体啊，那还是要提高自己的知识水平！懂我的意思——识得唔识得啊？
+      reply_type: 0
+    - data: 你们有一个好，全世界跑到什么地方，你们比其他的西方记者啊跑得还快。但是呢问来问去的问题啊，都 too simple，啊，sometimes naive！懂了没啊？
+      reply_type: 0
+    - data: 我很抱歉，我今天是作为一个长者跟你们讲这个。我见得太多了，我有这个必要告诉你们一点人生的经验。
+      reply_type: 0
+    - data: 将来如果你们报道上有偏差，你们要负责。
+      reply_type: 0
+    - data: 中国有一句话叫“闷声发大财”。
+      reply_type: 0
+    - data: 你们给我搞的这个东西……Excited！
+      reply_type: 0
+    - data: 你们吶，naive！I'm angry！我今天算得罪了你们一下！
+      reply_type: 0
+
+- keywords: [angry]
+  target_authors: ["*"]
+  replies:
+    - data: I'm angry！我今天算得罪了你们一下！
+      reply_type: 0
+- keywords: [naive, 那义务, 哪义务]
+  target_authors: ["*"]
+  replies:
+    - data: "too young too simple, sometimes naive!"
+      reply_type: 0
+- keywords: [华莱士, 華萊士]
+  target_authors: ["*"]
+  replies:
+    - data: 美国的华莱士，那比你们不知道高到哪里去啦。我跟他谈笑风生！
+      reply_type: 0
+- keywords: [大新闻, 批判一番]
+  target_authors: ["*"]
+  replies:
+    - data: 你们啊，不要想弄个大新闻，再把我批判一番。
+      reply_type: 0
+- keywords: [支持]
+  target_authors: ["*"]
+  replies:
+    - data: 你问我资瓷不资瓷，我说资瓷。
+      reply_type: 0
+- keywords: [基本法]
+  target_authors: ["*"]
+  replies:
+    - data: 还是按照香港的基本法去产生。
+      reply_type: 0
+- keywords: [基本法]
+  target_authors: ["*"]
+  replies:
+    - data: 还是按照香港的基本法去产生。
+      reply_type: 0
+
+
+
+
+
 
 # 花生语录
 - keywords: [花生, P蛆, Peanut, 洪宥祥, P皇]
