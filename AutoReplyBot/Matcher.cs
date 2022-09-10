@@ -15,7 +15,7 @@ public class Matcher
 
     public class Action
     {
-        public Action(string replyContent, string? emotionType, int? triggerChance)
+        public Action(string replyContent, string? emotionType, double? triggerChance)
         {
             ReplyContent = replyContent;
             EmotionType = emotionType;
@@ -23,10 +23,10 @@ public class Matcher
         }
         public string ReplyContent { get; set; }
         public string? EmotionType { get; set; }
-        public int? TriggerChance { get; set; }
+        public double? TriggerChance { get; set; }
     }
 
-    public Task<Action[]> Match(string content, string userName)
+    public Task<Action[]> Match(Comment? comment, string content, string userName)
     {
         // throw away @username when matching
         try
@@ -44,6 +44,9 @@ public class Matcher
                         (r.IgnoreCase != false && r.Keywords.Any(k => content.Contains(k, StringComparison.OrdinalIgnoreCase))) ||
                         (r.IgnoreCase == false && r.Keywords.Any(content.Contains))) &&
                         (r.TargetAuthors.Contains(userName) || r.TargetAuthors.Contains("*")))
+            .Where(r => (r.Type == null || (r.Type != null &&
+                        ((r.Type == "post" && comment!.CommentId == 0) ||
+                        (r.Type == "comment" && comment!.CommentId != 0)))))
             .Take(_takes)
             .Select(async r =>
             {
@@ -52,7 +55,7 @@ public class Matcher
                 {
                     ReplyType.PlainText => new Action(reply.Data.Trim(), r.EmotionType, r.TriggerChance),
                     ReplyType.CSharpScript => new Action(await Script.Eval(reply.Data.Trim()), r.EmotionType, r.TriggerChance),
-                    _ => throw new ArgumentOutOfRangeException()
+                    _ => throw new InvalidOperationException()
                 };
             });
         return Task.WhenAll(actions);
