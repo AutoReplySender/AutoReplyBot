@@ -4,6 +4,7 @@ using System.Text.Json;
 using Band;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -47,12 +48,15 @@ public class Program
         var (email, password, chromeDriverDir, chromePath, proxy, maxTriggerTimesBySinglePost, endPoint,
             connectionString) = config;
         var services = new ServiceCollection();
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("configs/config.json")
+            .Build();
         services.AddLogging(builder =>
         {
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
+                .ReadFrom.Configuration(configuration)
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning) // make EF Core logging less verbose
-                .MinimumLevel.Debug()
                 .CreateLogger();
             builder.AddSerilog();
         });

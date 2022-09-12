@@ -6,5 +6,11 @@
   "Proxy": "http://localhost:8888",
   "MaxTriggerTimesBySinglePost": 9,
   "EndPoint": null,
-  "ConnectionString": "Host=localhost;Database=postgres;Username=postgres;SearchPath=auto_reply;"
+  "ConnectionString": "Host=localhost;Database=postgres;Username=postgres;SearchPath=auto_reply;",
+  "Serilog": {
+    "MinimumLevel": "Information",
+    "WriteTo": [{
+      "Name": "Console"
+    }]
+  }
 }
