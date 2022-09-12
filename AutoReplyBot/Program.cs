@@ -17,7 +17,7 @@ namespace AutoReplyBot;
 public class Program
 {
     public record Config(string Email, string Password, string ChromeDriverDir, string ChromePath,
-        string Proxy, int MaxTriggerTimesBySinglePost, string? EndPoint, string ConnectionString);
+        string Proxy, int MaxTriggerTimesBySinglePost, string? EndPoint, string ConnectionString, List<string> Usernames);
 
     public static async Task<List<Rule>> LoadRules()
     {
@@ -46,7 +46,7 @@ public class Program
 
         var config = JsonSerializer.Deserialize<Config>(await File.ReadAllBytesAsync("configs/config.json"))!;
         var (email, password, chromeDriverDir, chromePath, proxy, maxTriggerTimesBySinglePost, endPoint,
-            connectionString) = config;
+            connectionString, usernames) = config;
         var services = new ServiceCollection();
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -87,7 +87,7 @@ public class Program
         services.AddScoped<IWebProxy>(_ => new WebProxy(proxy));
         services.AddScoped<HttpPing>();
         services.AddScoped(sp =>
-            new Matcher(LoadRules().Result, maxTriggerTimesBySinglePost, sp.GetRequiredService<ILogger<Matcher>>()));
+            new Matcher(LoadRules().Result, maxTriggerTimesBySinglePost, sp.GetRequiredService<ILogger<Matcher>>(), usernames));
         // services.AddScoped<BandClient, MockBandClient>();
         services.AddScoped<BandClient>();
         services.AddScoped<CookieHelper>();

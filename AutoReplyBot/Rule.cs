@@ -10,8 +10,8 @@ public class Rule
     public required List<Reply> Replies { get; set; }
     public bool? IgnoreCase { get; set; }
     public double? TriggerChance { get; set; }
-    public string? EmotionType { get; set; }
     public string? Type { get; set; }
+    public bool? OnlyMe { get; set; }
 }
 
 public class Reply
@@ -22,6 +22,8 @@ public class Reply
 
     // Will be null when ReplyType is PlainText. Maybe there is something better if C# has discriminated union.
     public ScriptRunner<string>? Script;
+
+    public string? EmotionType { get; set; }
 }
 
 public enum ReplyType

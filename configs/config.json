@@ -7,6 +7,7 @@
   "MaxTriggerTimesBySinglePost": 9,
   "EndPoint": null,
   "ConnectionString": "Host=localhost;Database=postgres;Username=postgres;SearchPath=auto_reply;",
+  "Usernames": ["AutoReplySender"],
   "Serilog": {
     "MinimumLevel": "Information",
     "WriteTo": [{

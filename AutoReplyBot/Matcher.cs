@@ -1,4 +1,6 @@
+using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 
 namespace AutoReplyBot;
@@ -11,12 +13,14 @@ public class Matcher
     private readonly List<Rule> _rules;
     private readonly int _takes;
     private readonly ILogger<Matcher> _logger;
+    private readonly List<string> _usernames;
 
-    public Matcher(List<Rule> rules, int takes, ILogger<Matcher> logger)
+    public Matcher(List<Rule> rules, int takes, ILogger<Matcher> logger, List<string> usernames)
     {
         _rules = rules;
         _takes = takes;
         _logger = logger;
+        _usernames = usernames;
     }
 
     public class Action
@@ -36,6 +40,14 @@ public class Matcher
 
     public Task<Action[]> Match(Comment? comment, string content, int userNo, string userName)
     {
+        bool at_me = false;
+        foreach (var username in _usernames) {
+            if (content.Contains($"{username}</band:refer>"))
+            {
+                at_me = true;
+                break;
+            }
+        }
         // throw away @username when matching
         try
         {
@@ -56,15 +68,16 @@ public class Matcher
             .Where(r => (r.Type == null || (r.Type != null &&
                                             ((r.Type == "post" && comment!.CommentId == 0) ||
                                              (r.Type == "comment" && comment!.CommentId != 0)))))
+            .Where(r => (r.OnlyMe != true || (r.OnlyMe == true && at_me == true)))
             .Take(_takes)
             .Select(async r =>
             {
                 var reply = r.Replies[Random.Shared.Next(r.Replies.Count)];
                 return reply.ReplyType switch
                 {
-                    ReplyType.PlainText => new Action(reply.Data.Trim(), r.EmotionType, r.TriggerChance),
+                    ReplyType.PlainText => new Action(reply.Data.Trim(), reply.EmotionType, r.TriggerChance),
                     ReplyType.CSharpScript => new Action(await reply.Script!(new Global(userName, userNo)),
-                        r.EmotionType,
+                        reply.EmotionType,
                         r.TriggerChance),
                     _ => throw new InvalidOperationException()
                 };
