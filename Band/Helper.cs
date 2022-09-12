@@ -10,7 +10,7 @@ public static class Helper
     public static List<Cookie> ParseCookies(string cookies)
     {
         var list = new List<Cookie>();
-        var entries = cookies.Split("; ");
+        var entries = cookies.Trim().Split("; ");
         foreach (var entry in entries)
         {
             var index = entry.IndexOf('=');
@@ -24,7 +24,8 @@ public static class Helper
 
     public static long GetUnixTimeStamp()
     {
-        return DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        // UtcNow is slightly faster
+        return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
 
     public static IDictionary<string, string> ToDictionary(this object source)
@@ -57,14 +58,13 @@ public static class Helper
         return sb.ToString();
     }
 
-    public static void PrettyPrint(this object source)
+    public static string PrettyFormat(this object source)
     {
-        Console.WriteLine(JsonSerializer.Serialize(source,
+        return JsonSerializer.Serialize(source,
             new JsonSerializerOptions
             {
                 WriteIndented = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            })
-        );
+            });
     }
 }

@@ -2,66 +2,86 @@
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using Band.Models;
-using Band.Models.Comments;
-using Band.Models.Feed;
-using Polly;
+using Microsoft.Extensions.Logging;
 using static Band.Helper;
 
 namespace Band;
 
-public class BandClient : IDisposable
+public class BandClientOptions
 {
-    private const string UserAgent =
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36";
+    // CookieContainer can't be modified after BandClient initialized so disallow modifying here
+    // Others can be changed, but why? Disallow it too since it requires more code to work.
+    public required CookieContainer CookieContainer { get; init; }
+    public string Suffix { get; init; } = "Sent from BAND Client Library";
+    public string? EndPoint { get; init; }
+}
 
-    public readonly CookieContainer CookieContainer;
+public partial class BandClient
+{
+    protected readonly ILogger<BandClient> Logger;
 
-    public readonly HttpClient HttpClient;
-    public readonly HttpMessageHandler HttpMessageHandler;
-
-    // We will set SecretKey in RefreshAsync() so suppress the non-initialized warning
-    public volatile string SecretKey = null!;
-
-    public string Suffix = "Sent from BAND Client Library";
-
-    public BandClient(string cookies, string? proxy = null)
+    public static readonly string[] Endpoints =
     {
-        #region Initialize CookieContainer
+        "https://api.band.us",
+        "https://api-de.band.us",
+        "https://api-kr.band.us",
+        "https://api-us.band.us",
+        "https://api-usw.band.us",
+        "https://api-sg.band.us",
+    };
 
-        CookieContainer = new CookieContainer();
+    public static CookieContainer CreateCookieContainer(string cookies)
+    {
+        var cookieContainer = new CookieContainer();
         var cookieList = ParseCookies(cookies);
         foreach (var cookie in cookieList)
         {
             cookie.Path = "/";
             cookie.Domain = ".band.us";
-            CookieContainer.Add(cookie);
+            cookieContainer.Add(cookie);
         }
 
-        #endregion
+        return cookieContainer;
+    }
+
+    private const string UserAgent =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36";
+
+    private readonly CookieContainer _cookieContainer;
+    private readonly HttpClient _httpClient;
+
+    private readonly string _suffix;
+
+    // We will set SecretKey in RefreshAsync() so suppress the uninitialized warning
+    private volatile string _secretKey = null!;
+
+    public BandClient(BandClientOptions options, HttpPing httpPing, ILogger<BandClient> logger, IWebProxy? proxy = null)
+    {
+        Logger = logger;
+        _cookieContainer = options.CookieContainer;
+        _suffix = options.Suffix;
 
         #region Initialize HttpClientHandler
 
-        HttpMessageHandler = new HttpRetryMessageHandler(new HttpClientHandler
+        var httpClientHandler = new HttpClientHandler
         {
-            CookieContainer = CookieContainer,
-            Proxy = new WebProxy(proxy)
-        });
+            CookieContainer = _cookieContainer,
+            Proxy = proxy
+        };
 
         #endregion
 
         #region Initialize HttpClient
 
-        HttpClient = new HttpClient(HttpMessageHandler)
+        _httpClient = new HttpClient(httpClientHandler)
         {
             DefaultRequestHeaders =
             {
-                {"user-agent", UserAgent},
-                {"akey", "bbc59b0b5f7a1c6efe950f6236ccda35"},
-                {"device-time-zone-id", "Asia/Shanghai"}
+                { "user-agent", UserAgent },
+                { "akey", "bbc59b0b5f7a1c6efe950f6236ccda35" },
+                { "device-time-zone-id", "Europe/Paris" } // Rabbit House's time zone
             },
-            BaseAddress = new Uri("https://api.band.us/")
+            BaseAddress = new Uri(options.EndPoint ?? httpPing.GetFastest(Endpoints).Result)
         };
 
         #endregion
@@ -69,151 +89,33 @@ public class BandClient : IDisposable
         RefreshAsync().Wait();
     }
 
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
     public async Task<HttpResponseMessage> RefreshAsync()
     {
-        var response = await HttpClient.GetAsync("https://auth.band.us/refresh");
-        var secretKey = CookieContainer.GetAllCookies().FirstOrDefault(c => c.Name == "secretKey")?.Value;
+        var response = await _httpClient.GetAsync("https://auth.band.us/refresh");
+        var secretKey = _cookieContainer.GetAllCookies().FirstOrDefault(c => c.Name == "secretKey")?.Value;
         if (string.IsNullOrEmpty(secretKey)) throw new AuthenticationException("Cookies expired.");
 
-        SecretKey = secretKey.Trim('"');
+        _secretKey = secretKey.Trim('"');
         return response;
     }
 
-    public Task<HttpResponseMessage> CreateCommentAsync(int bandNo, int postNo, string body)
+    public async Task<HttpResponseMessage> PostAsync(string uri, IDictionary<string, string> form)
     {
-        const string uri = "/v2.3.0/create_comment";
-        var form = new CreateComment
-        {
-            BandNo = bandNo,
-            Body = $"{body}\n\n{Suffix}",
-            ContentKey = new ContentKey {PostNo = postNo}
-        }.ToDictionary();
-        return PostAsync(uri, form);
-    }
-
-    public Task<HttpResponseMessage> CreateCommentAsync(int bandNo, int postNo, int commentId, string body, int userNo,
-        string userName)
-    {
-        const string uri = "/v2.3.0/create_comment";
-        var form = new CreateComment
-        {
-            BandNo = bandNo,
-            Body = $"<band:refer user_no=\"{userNo}\">{userName}</band:refer> {body}\n\n{Suffix}",
-            ContentKey = new ContentKey {PostNo = postNo, ContentType = "post_comment", CommentId = commentId}
-        }.ToDictionary();
-        return PostAsync(uri, form);
-    }
-
-    public Task<HttpResponseMessage> SetEmotionAsync(int bandNo, int postNo, string type)
-    {
-        const string uri = "/v2.0.0/set_emotion";
-        var form = new SetEmotion
-        {
-            BandNo = bandNo,
-            Type = type,
-            ContentKey = new ContentKey { PostNo = postNo }
-        }.ToDictionary();
-        return PostAsync(uri, form);
-    }
-
-    public Task<HttpResponseMessage> SetEmotionAsync(int bandNo, int postNo, int commentId, string type)
-    {
-        const string uri = "/v2.0.0/set_emotion";
-        var form = new SetEmotion
-        {
-            BandNo = bandNo,
-            Type = type,
-            ContentKey = new ContentKey { PostNo = postNo, ContentType = "post_comment", CommentId = commentId }
-        }.ToDictionary();
-        return PostAsync(uri, form);
-    }
-
-    public Task<HttpResponseMessage> SetEmotionAsync(int bandNo, int postNo, int originalCommentId, int commentId, string type)
-    {
-        const string uri = "/v2.0.0/set_emotion";
-        var form = new SetEmotion
-        {
-            BandNo = bandNo,
-            Type = type,
-            ContentKey = new ContentKey { PostNo = postNo, ContentType = "post_comment_comment", OriginalCommentId= originalCommentId, CommentId = commentId }
-        }.ToDictionary();
-        return PostAsync(uri, form);
-    }
-
-    public async Task<Comments> GetCommentsAsync(int bandNo, int postNo)
-    {
-        const string uri = "/v2.3.0/get_comments";
-        var form = new
-        {
-            BandNo = bandNo,
-            ContentKey = new ContentKey {ContentType = "post", PostNo = postNo}
-        }.ToDictionary();
-        using var response = await PostAsync(uri, form);
-        await using var stream = await response.Content.ReadAsStreamAsync();
-        return (await JsonSerializer.DeserializeAsync<Result<Comments>>(stream))!.ResultData;
-    }
-
-    public async Task<Feed> GetFeedAsync()
-    {
-        const string uri = "/v2.1.0/get_feed";
-        var form = new GetFeed().ToDictionary();
-        using var response = await PostAsync(uri, form);
-        await using var stream = await response.Content.ReadAsStreamAsync();
-        return (await JsonSerializer.DeserializeAsync<Result<Feed>>(stream))!.ResultData;
-    }
-
-    public Task<HttpResponseMessage> PostAsync(string uri, IDictionary<string, string> form)
-    {
-        form.Add("ts", GetUnixTimeStamp().ToString());
+        form.Add("ts", (GetUnixTimeStamp() - Random.Shared.Next(9999)).ToString());
         form.Add("resolution_type", "4");
         var content = new FormUrlEncodedContent(form)
         {
-            Headers = {{"md", MakeMd(uri)}}
+            Headers = { { "md", MakeMd(uri) } }
         };
-        return HttpClient.PostAsync(uri, content);
+        return await _httpClient.PostAsync(uri, content);
     }
 
     public string MakeMd(string uri)
     {
         // HMACSHA256.ComputeHash is not thread-safe so create new HMACSHA256 every time
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(SecretKey));
+        // HMACSHA256 uses no unmanaged resources so it's unneeded to dispose it. 
+        var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_secretKey));
         var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(uri));
         return Convert.ToBase64String(hash);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!disposing) return;
-        HttpClient.Dispose();
-        HttpMessageHandler.Dispose();
-    }
-
-    public class HttpRetryMessageHandler : DelegatingHandler
-    {
-        public HttpRetryMessageHandler(HttpClientHandler handler) : base(handler)
-        {
-        }
-
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-            CancellationToken cancellationToken)
-        {
-            return Policy
-                .Handle<HttpRequestException>()
-                .Or<TaskCanceledException>()
-                .OrResult<HttpResponseMessage>(x => !x.IsSuccessStatusCode)
-                .WaitAndRetryAsync(new[]
-                {
-                    TimeSpan.FromSeconds(1),
-                    TimeSpan.FromSeconds(2),
-                    TimeSpan.FromSeconds(3)
-                })
-                .ExecuteAsync(() => base.SendAsync(request, cancellationToken));
-        }
     }
 }

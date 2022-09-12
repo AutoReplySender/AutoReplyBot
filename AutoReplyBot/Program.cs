@@ -1,65 +1,36 @@
-﻿using System.Collections.Concurrent;
+﻿using System.Net;
 using System.Text;
 using System.Text.Json;
 using Band;
 using Microsoft.EntityFrameworkCore;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using static Band.Helper;
 
 namespace AutoReplyBot;
 
-class Program
+public class Program
 {
-    public record Config(string Email, string Password, string ChromeDriverDir, string ChromePath, int Consumers,
-        string Proxy, int MaxTriggerTimesBySinglePost);
+    public record Config(string Email, string Password, string ChromeDriverDir, string ChromePath,
+        string Proxy, int MaxTriggerTimesBySinglePost, string? EndPoint, string ConnectionString);
 
     public static async Task<List<Rule>> LoadRules()
     {
-        string content = await File.ReadAllTextAsync("configs/rules.yaml");
+        var content = await File.ReadAllTextAsync("configs/rules.yaml");
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
         var rules = deserializer.Deserialize<List<Rule>>(content);
+        rules
+            .AsParallel()
+            .SelectMany(rule => rule.Replies)
+            .Where(reply => reply.ReplyType == ReplyType.CSharpScript)
+            .ForAll(reply => reply.Script = Script.CreateDelegate<string>(reply.Data, typeof(Global)));
         return rules;
-    }
-
-    public static BandClient InitBandClient(string cookies, string proxy)
-    {
-        return new BandClient(cookies, proxy)
-        {
-            Suffix =
-                "I am a bot, and this action was performed automatically. Please contact 兔友小e if you have any questions or concerns."
-        };
-    }
-
-    public static string GetCookiesFromBrowser(string email, string password, string chromeDriverDir, string chromePath,
-        bool headless)
-    {
-        var options = new ChromeOptions { BinaryLocation = chromePath };
-        if (headless)
-        {
-            options.AddArguments("headless");
-        }
-
-        var driver = new ChromeDriver(chromeDriverDir, options);
-        driver.Navigate().GoToUrl("https://auth.band.us/email_login?keep_login=true");
-        driver.FindElement(By.Id("input_email")).SendKeys(email);
-        driver.FindElement(By.CssSelector("#email_login_form > button")).Click();
-        driver.FindElement(By.Id("pw")).SendKeys(password);
-        driver.FindElement(By.CssSelector("#email_password_login_form > button")).Click();
-        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-        wait.Until(d => d.Url.StartsWith("https://band.us"));
-        driver.Navigate().GoToUrl("https://auth.band.us");
-        var cookies = (string)driver.ExecuteScript("return document.cookie");
-#if DEBUG
-        Console.WriteLine(cookies);
-#endif
-        driver.Navigate().GoToUrl("https://band.us");
-        return cookies;
     }
 
     public static async Task Main(string[] args)
@@ -73,27 +44,58 @@ class Program
         #endregion
 
         var config = JsonSerializer.Deserialize<Config>(await File.ReadAllBytesAsync("configs/config.json"))!;
-        var (email, password, chromeDriverDir, chromePath, consumers, proxy, maxTriggerTimesBySinglePost) = config;
-        var matcher = new Matcher(await LoadRules(), maxTriggerTimesBySinglePost);
-        string cookies;
-        if (args.Contains("--login"))
+        var (email, password, chromeDriverDir, chromePath, proxy, maxTriggerTimesBySinglePost, endPoint,
+            connectionString) = config;
+        var services = new ServiceCollection();
+        services.AddLogging(builder =>
         {
-            cookies = GetCookiesFromBrowser(email, password, chromeDriverDir, chromePath, args.Contains("--headless"));
-            await File.WriteAllTextAsync("configs/saved.cookies", cookies);
-        }
-        else
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning) // make EF Core logging less verbose
+                .MinimumLevel.Debug()
+                .CreateLogger();
+            builder.AddSerilog();
+        });
+        services.AddScoped(sp =>
         {
-            // remove \n, \r 
-            cookies = (await File.ReadAllTextAsync("configs/saved.cookies")).Trim();
-        }
+            string cookies;
+            if (args.Contains("--login"))
+            {
+                var helper = sp.GetRequiredService<CookieHelper>();
+                cookies = helper.GetCookiesFromBrowser(email, password, chromeDriverDir, chromePath,
+                    args.Contains("--headless"));
+                File.WriteAllText("configs/saved.cookies", cookies);
+            }
+            else
+            {
+                // remove \n, \r 
+                cookies = File.ReadAllText("configs/saved.cookies").Trim();
+            }
 
-        var client = InitBandClient(cookies, proxy);
-        var channel = new BlockingCollection<ChannelData>();
-        for (var i = 0; i < consumers; i++)
-        {
-            _ = Task.Run(new Consumer(channel, client, matcher).Consume);
-        }
-
-        Task.Run(new Producer(channel, client).Produce).Wait();
+            return new BandClientOptions
+            {
+                CookieContainer = BandClient.CreateCookieContainer(cookies),
+                Suffix =
+                    "I am a bot, and this action was performed automatically. Please contact 兔友小e if you have any questions or concerns.",
+                EndPoint = endPoint
+            };
+        });
+        services.AddScoped<IWebProxy>(_ => new WebProxy(proxy));
+        services.AddScoped<HttpPing>();
+        services.AddScoped(sp =>
+            new Matcher(LoadRules().Result, maxTriggerTimesBySinglePost, sp.GetRequiredService<ILogger<Matcher>>()));
+        // services.AddScoped<BandClient, MockBandClient>();
+        services.AddScoped<BandClient>();
+        services.AddScoped<CookieHelper>();
+        services.AddScoped<Producer>();
+        services.AddScoped<Consumer>();
+        var options = new DbContextOptionsBuilder<AutoReplyContext>()
+            .UseNpgsql(connectionString)
+            .UseSnakeCaseNamingConvention()
+            .Options;
+        var factory = new PooledDbContextFactory<AutoReplyContext>(options);
+        services.AddTransient(_ => factory.CreateDbContext());
+        var sp = services.BuildServiceProvider();
+        await sp.GetRequiredService<Producer>().Produce();
     }
 }

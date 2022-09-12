@@ -6,13 +6,11 @@ namespace AutoReplyBot;
 
 public class AutoReplyContext : DbContext
 {
-    public DbSet<Rule> Rules { get; set; } = null!;
     public DbSet<Comment> ProcessedComments { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options
-            .UseNpgsql("Host=localhost;Database=postgres;Username=postgres;SearchPath=auto_reply;")
-            .UseSnakeCaseNamingConvention();
+    public AutoReplyContext(DbContextOptions<AutoReplyContext> options) : base(options)
+    {
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -21,30 +19,11 @@ public class AutoReplyContext : DbContext
             rc.BandNo, rc.PostNo, rc.CommentId, rc.SubCommentId
         });
     }
-}
 
-public enum ReplyType
-{
-    PlainText,
-    [PgName("csharp_script")] CSharpScript
-}
-
-public class Rule
-{
-    public int Id { get; set; }
-    public required List<string> Keywords { get; set; }
-    public required List<string> TargetAuthors { get; set; }
-    [Column(TypeName = "jsonb")] public required List<Reply> Replies { get; set; }
-    public bool? IgnoreCase { get; set; } 
-    public double? TriggerChance { get; set; }
-    public string? EmotionType { get; set; }
-    public string? Type { get; set; }
-}
-
-public class Reply
-{
-    public required ReplyType ReplyType { get; set; }
-    public required string Data { get; set; }
+    public async Task<bool> CheckProcessed(Comment comment)
+    {
+        return await ProcessedComments.AnyAsync(pc => pc == comment);
+    }
 }
 
 [Table("processed_comments")]

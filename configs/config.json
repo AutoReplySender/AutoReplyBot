@@ -3,7 +3,8 @@
   "Password": "",
   "ChromeDriverDir": "",
   "ChromePath": "/usr/bin/chrome-browser",
-  "Consumers": 4,
   "Proxy": "http://localhost:8888",
-  "MaxTriggerTimesBySinglePost": 9
+  "MaxTriggerTimesBySinglePost": 9,
+  "EndPoint": null,
+  "ConnectionString": "Host=localhost;Database=postgres;Username=postgres;SearchPath=auto_reply;"
 }
