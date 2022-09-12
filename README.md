@@ -16,12 +16,13 @@ bot 使用的各项配置文件保存在 `configs` 文件夹下。
   replies: # 触发bot后发送的回复。支持设定多条回复，bot会随机选择一条发送
     - data: 回复文本一
       reply_type: 0 # 0代表正常文本，1代表需要求值的C#表达式
+      emotion_type: sad # 可选，触发该回复时设置的表情，默认不设置表情。当前BAND支持great, funny, like, shocked, sad, angry六种表情
     - data: 回复文本二
       reply_type: 0
   ignore_case: false # 可选，设置为false时关键词区分大小写，默认不区分大小写
   trigger_chance: 100 # 可选，满足触发条件时触发bot的概率的百分数，支持小数，默认为100%触发
-  emotion_type: sad # 可选，满足触发条件时设置的表情，默认不设置表情。当前BAND支持great, funny, like, shocked, sad, angry六种表情
   type: comment # 可选，设置为comment时仅回复可以触发bot，为post时仅主贴可以触发bot。默认主贴和回复均可触发
+  only_me: true # 可选，设置为true时仅bot（或其他指定用户名）被@到时才会触发该关键词。默认无需@bot即可触发
 ```
 
 ### 运行配置：`config.json`
@@ -35,6 +36,13 @@ bot 使用的各项配置文件保存在 `configs` 文件夹下。
   "Consumers": 4, <- 发送回复的线程数
   "Proxy": "http://localhost:8888", <- bot使用的代理，不用代理请设置为null
   "MaxTriggerTimesBySinglePost": 9 <- 单条回复能触发的bot回复数量的上限
+  "Usernames": ["AutoReplySender"], <- 用于only_me选项，是设置该选项时被@到才会触发回复的用户名，预期用法是设置成bot自己的用户名
+  "Serilog": { <- 日志设定
+    "MinimumLevel": "Information", <- 日志等级，推荐测试环境下设置为Debug，生产环境下设置为Information
+    "WriteTo": [{
+      "Name": "Console" <- 将日志在控制台中输出
+    }]
+  }  
 }
 ```
 
