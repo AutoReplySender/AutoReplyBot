@@ -41,7 +41,8 @@ public class Matcher
     public Task<Action[]> Match(Comment? comment, string content, int userNo, string userName)
     {
         bool at_me = false;
-        foreach (var username in _usernames) {
+        foreach (var username in _usernames)
+        {
             if (content.Contains($"{username}</band:refer>"))
             {
                 at_me = true;
@@ -72,7 +73,7 @@ public class Matcher
             .Take(_takes)
             .Select(async r =>
             {
-                var reply = r.Replies[Random.Shared.Next(r.Replies.Count)];
+                var reply = r.Replies[(comment!.PostNo + comment.CommentId + comment.SubCommentId / 2) % r.Replies.Count];
                 return reply.ReplyType switch
                 {
                     ReplyType.PlainText => new Action(reply.Data.Trim(), reply.EmotionType, r.TriggerChance),
