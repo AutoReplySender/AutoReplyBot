@@ -12,6 +12,7 @@ public class Rule
     public double? TriggerChance { get; set; }
     public string? Type { get; set; }
     public bool? AtMe { get; set; }
+    public bool? HaveBandRefer { get; set; }
 }
 
 public class Reply

@@ -1,12 +1,14 @@
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Band.Models.Feed;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 
 namespace AutoReplyBot;
 
 // Global variables that will be injected into C# script
-public record Global(string UserName, int UserNo);
+public record Global(string UserName, int UserNo, string MentionedUserName, int MentionedUserNo);
 
 public class Matcher
 {
@@ -49,16 +51,19 @@ public class Matcher
                 break;
             }
         }
+        bool have_band_refer = false;
+        var mentionString = @"<band:refer user_no=""(?<mentionedUserNo>[^>]*)"">(?<mentionedUserName>[^<]*)</band:refer>";
+        var result = Regex.Match(content, mentionString);
+        var mentionedUserNo = userNo;
+        var mentionedUserName = userName;
+        if (result.Success)
+        {
+            have_band_refer = true;
+            mentionedUserNo = int.Parse(result.Groups["mentionedUserNo"].Value);
+            mentionedUserName = result.Groups["mentionedUserName"].Value;
+        }
         // throw away @username when matching
-        try
-        {
-            content = Regex.Replace(content, @"<band:refer[^>]*>[^<]*</band:refer>", "");
-        }
-        catch (RegexMatchTimeoutException e)
-        {
-            _logger.LogError(e, null);
-        }
-
+        content = Regex.Replace(content, @"<band:refer[^>]*>[^<]*</band:refer>", "");
         if (content.Contains("I am a bot")) return Task.FromResult(Array.Empty<Action>());
         var actions = _rules
             .Where(r => (r.Keywords.Contains("*") ||
@@ -72,6 +77,9 @@ public class Matcher
             .Where(r => (r.AtMe == null ||
                         (r.AtMe == true && at_me == true) ||
                         (r.AtMe == false && at_me == false)))
+            .Where(r => (r.HaveBandRefer == null ||
+                        (r.HaveBandRefer == true && have_band_refer == true) ||
+                        (r.HaveBandRefer == false && have_band_refer == false)))
             .Take(_takes)
             .Select(async r =>
             {
@@ -79,7 +87,7 @@ public class Matcher
                 return reply.ReplyType switch
                 {
                     ReplyType.PlainText => new Action(reply.Data.Trim(), reply.EmotionType, r.TriggerChance),
-                    ReplyType.CSharpScript => new Action(await reply.Script!(new Global(userName, userNo)),
+                    ReplyType.CSharpScript => new Action(await reply.Script!(new Global(userName, userNo, mentionedUserName, mentionedUserNo)),
                         reply.EmotionType,
                         r.TriggerChance),
                     _ => throw new InvalidOperationException()

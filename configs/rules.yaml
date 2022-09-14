@@ -28,11 +28,12 @@
 - keywords: ["good bot", goodbot, "bad bot", badbot]
   target_authors: ["*"]
   replies:
-    - data: '$"你确定吗？据我判断， <band:refer user_no=\"{UserNo}\">{UserName}</band:refer> 有89.64%的可能性不是bot。"'
+    - data: '$"你确定吗？据我判断， <band:refer user_no=\"{MentionedUserNo}\">{MentionedUserName}</band:refer> 有89.64%的可能性不是bot。"'
       reply_type: 1
     - data: 有没有一种可能，我是说可能，这只是我的一种猜测而已，也不一定对：因为还没偷到BAND的bot代码，你以为的bot实际上是真人在回复。
       reply_type: 0
   at_me: false
+  have_band_refer: true
 - keywords: [三次元]
   target_authors: ["*"]
   replies:
@@ -466,13 +467,13 @@
   replies:
     - data: 我感觉群里的鼠人应该挺多有前科的。谈谈你们怎么被警察铁拳的。你得讲讲你的上梁山经历，在这里说话才有分量。我是不会回你们评论的，傻逼会downvote我karma。你们啊还是红卫兵那一套。不会就事论事，干啥啥不行批斗第一名。我觉得水浒传是研究社科的宝贵书籍。话说你们报复社会如果没有报复社会的故事跟晶哥斗几回合上梁山那么太无聊了吧。
       reply_type: 0
-      emotion_type: angry      
+      emotion_type: angry
     - data: 美国要搞经济绝交的话，中国应该主要影响是用的手机跑分低一大截吧。民用企业可能你不知道，其实是真的再给美国送钱。如果美国不想要这些easy money，损失更大的应该是美国。毕竟中国赚的外汇是劳动所得，美国赚的钱和实打实的物品，服务，只需要弄水军吹一下他们的饮食文化，殖民火星之类的，还有纺织业没有自己的品牌贴牌子完全就是送钱，你买一些进口衣服就知道用料做工比国内一线城市商场卖的那些差多少了。
       reply_type: 0
-      emotion_type: angry      
+      emotion_type: angry
     - data: 又在传播谣言。中国当时接了几万华人回来。反而是台湾派人去造谣说不要上共产党的贼船。98年网络还没有，印尼一个地方被屠了，另一个地方的华人一时半会还不知道，导致寻求救援的华人也有限。你懂个鸡巴毛。看的都是什么狗屁媒体
       reply_type: 0
-      emotion_type: angry      
+      emotion_type: angry
     - data: 如果是印度或者中东雇主打了他们印度中东雇员。澳洲媒体会报道吗？这些善良的人被利用罢了
       reply_type: 0
       emotion_type: angry
@@ -481,13 +482,13 @@
       emotion_type: angry
     - data: 真心要run还是方法多的很的。只是你现在心里知道毕竟211有很大几率以后能在中国过上还算体面的生活。在国外黑着大概率活的不如中国。但是你对成长经历又有很大阴影，在中国没有了能量积极生活，想逃避现实，恨国恨民族。但是不可否认的是你付出过很大的努力，你内心已经有答案了。如果没有公派留学的机会，你是不会run的。
       reply_type: 0
-      emotion_type: angry      
+      emotion_type: angry
     - data: 今天中国人吃饱喝足了，不想被白人列强整天阴阳怪气提醒当年中国人怎么神经质怎么饿肚子。有错吗？白人日本人这么伟大怎么不把当年抢走的贵金属还回来？怎么不人道支援点哪怕是肥料？当初没吃你的没拿你的，吃饱了没事做的外国人说你妈呢？如果你农村长大的在城里出息了你愿意回去听村霸逼逼你们家小时候怎么被他欺负的吗？自信一点，中国被逼的神经质的时代已经一去不复返了。
       reply_type: 0
-      emotion_type: angry      
+      emotion_type: angry
     - data: 中国最大的问题还是晚清被奴化太久了，在现代民族主义(起源近代法国)发展的过程中落后了。所以才会看到从上到下都充斥着大量逆向民族主义的狗几把。
       reply_type: 0
-      emotion_type: angry      
+      emotion_type: angry
     - data: 中国国情不一样。中国国民是生产者，官僚资本家获利只能压榨本国百姓，还没本事剥削其他人，而百姓不是傻子，一定会反抗。还有过去一两百年以来汉奸或者危害国家利益，买办们过的太好了。甚至被认为做买办为洋人利益服务才是正道。而老百姓一定不是傻子，一定会反抗，所以中国的矛盾会比美国大很多。等狗汉奸不能获得一毛钱好处的时代，你主观感受就会感觉共产党制度好。实际上利益主义者从来没改变过。
       reply_type: 0
       emotion_type: angry
@@ -758,18 +759,7 @@
       reply_type: 0
 
 # 蛤蟆语录
-- keywords: 
-    [
-      蛤蟆,
-      江泽民,
-      江澤民,
-      膜蛤,
-      褲腰帶,
-      裤腰带, 
-      黑框眼镜,
-      黑框眼鏡,
-      膜法,
-    ]
+- keywords: [蛤蟆, 江泽民, 江澤民, 膜蛤, 褲腰帶, 裤腰带, 黑框眼镜, 黑框眼鏡, 膜法]
   target_authors: ["*"]
   replies:
     - data: 吼啊！
