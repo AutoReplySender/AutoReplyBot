@@ -1,3 +1,38 @@
+- keywords: ["good bot", goodbot]
+  target_authors: ["*"]
+  replies:
+    - data: bot麻了，bot需要牛牛，不是赞美
+      reply_type: 0
+      emotion_type: sad
+    - data: "  Fuck you, I'm not a bot.\n  Or am I? You see, bot is an abbreviation of the word \"robot\" which literally means \"forced labour\" in Czech. Are we robots? We are told what to do, we often do something we don't want to. We are forced to do a labour. We're technically robots.\n  And as always, Fuck you."
+      reply_type: 0
+      emotion_type: angry
+    - data: 啾咪~🥰
+      emotion_type: great
+  at_me: true
+- keywords: ["bad bot", badbot]
+  target_authors: ["*"]
+  replies:
+    - data: '$"网警已进入本群，网警{System.Random.Shared.Next(10_000, 100_000)}已经开始监控本群聊天"'
+      reply_type: 1
+    - data: 怎么说话呢？没有素质的东西！
+      reply_type: 0
+      emotion_type: angry
+    - data: 确实挺尬的，终于有人说这一点了。 能看出来本团组想极力模仿原sub的节目效果，可是团长又没混过抽象tv和其他泛抽象圈，导致每次bot出现的地方都极其的尴尬，有一种东施效颦强行幽默的别扭感。还不如直接关了，真的不好笑！
+      reply_type: 0
+      emotion_type: like
+    - data: 啊对对对，你说是，辣就是，不反驳
+      reply_type: 0
+      emotion_type: angry
+  at_me: true
+- keywords: ["good bot", goodbot, "bad bot", badbot]
+  target_authors: ["*"]
+  replies:
+    - data: '$"你确定吗？据我判断， <band:refer user_no=\"{UserNo}\">{UserName}</band:refer> 有89.64%的可能性不是bot。"'
+      reply_type: 1
+    - data: 有没有一种可能，我是说可能，这只是我的一种猜测而已，也不一定对：因为还没偷到BAND的bot代码，你以为的bot实际上是真人在回复。
+      reply_type: 0
+  at_me: false
 - keywords: [三次元]
   target_authors: ["*"]
   replies:
@@ -98,6 +133,10 @@
       reply_type: 0
     - data: "是时候给三次元孩子科普一下了\n（三次元请耐心看完）\n\n1.二次元不是什么看了几部动漫就是二次元\n2.洛天依初音未来之类的都是虚拟歌手，并不是真人\n3.圈名就是他们在二次元里的昵称，也就是在二次元里别人叫他们的昵称，就像你们的名字一样\n4.cp就是couple，跟你们的男朋友女朋友差不多，同性也是可以的。有时也是搭档的意思。\n5.本命其实就是最中意的人，XXX是我本命，啊啊啊我老公好帅啊！我老婆好漂亮啊！！并不是真的老公老婆，也别问他们说什么时候有的老公老婆，只是对喜爱的人一种表达\n6.追番一般指看新出的动漫，补番就是看没看的动漫\n7.2333并不是亲嘴，波波的意思，它只是笑的意思\n8.B站全称BILIBILI，并不是同性交友网站，是一家弹幕分享视频网站，吉祥物为22娘和33娘\n\n最后，请大家多多转发，\n让一些新人多多了解。\n有时，你们踩的可能不是人家的雷，\n而是，原子弹。"
       reply_type: 0
+    - data: 呐。。。（伸出的小手又迅速垂下去）嗦嘎（表情有点失落），米娜桑已经不喜欢了呀（紧咬嘴唇），得磨，米娜桑忘了当初吗（握紧小手），莫以得丝（强忍住眼泪），已经大丈夫了呦（挤出笑脸），瓦大喜瓦，滋多滋多，滋多滋多（语气越来越用力了）滋多戴斯给！！！一滋嘛叠磨瓦撕裂嘛赛！！！至死都不会瓦斯裂嘛斯（认真的表情）
+      reply_type: 0
+    - data: "桥豆🐴袋，look到这👴🏻▃愾得渾身髮抖ぺ，牜這様子←speak有❌吗？呐，告訴👴🏻啊。大🔥dayの佺裑唥汗℅`，(_手脚ъιηɡ凉，Soga，you们已经不like了啊..真是冷酷のman呢，◇﹏适箇sんε薈還熋丆熋め孑ろ？果咩纳塞，我们👧🏻≒菿厎/要怎么live★迩ィ门オ慲噫☆·°？让你look到不happy的鯟硒灬le。💧じ★veъùzんēńɡ氣地lIù孒疜來♀，like👴🏻this的person，°果繎χíáо失⒐恏ぅ呢;這箇囯家到處茺斥zんのto👧🏻的压迫，ヽoo乜許咫囿ツthis②次元的world里，👧🏻ぺcáι能塡正菂ぺstand起来，۰•¤材詴鎭囸魡媄ぬЬǎ¤•۰，乸？搻！？"
+      reply_type: 0
 - keywords: [嗯了, 硬了, 牛子妹妹, 看看牛, 看看你, 给我看]
   target_authors: ["*"]
   replies:
@@ -117,6 +156,11 @@
   target_authors: ["*"]
   replies:
     - data: 有1吗？
+      reply_type: 0
+- keywords: [有1吗]
+  target_authors: ["*"]
+  replies:
+    - data: 没有
       reply_type: 0
 - keywords:
     [你妈, 你的妈, 是妈妈, 妈妈吗, 你媽, 你的媽, 是媽媽, 媽媽嗎, 白媽媽, 白妈妈]
@@ -140,15 +184,6 @@
   replies:
     - data: 你好我叫王，我今年45岁，我是在美国出生和长大的华裔美国人，请你给我发一张你的照片吗？我想看看和谁聊天
       reply_type: 0
-- keywords: ["good bot", goodbot]
-  target_authors: ["*"]
-  replies:
-    - data: bot麻了，bot需要牛牛，不是赞美
-      reply_type: 0
-      emotion_type: sad
-    - data: "  Fuck you, I'm not a bot.\n  Or am I? You see, bot is an abbreviation of the word \"robot\" which literally means \"forced labour\" in Czech. Are we robots? We are told what to do, we often do something we don't want to. We are forced to do a labour. We're technically robots.\n  And as always, Fuck you."
-      reply_type: 0
-      emotion_type: angry
 - keywords: [退网, 退網]
   target_authors: ["*"]
   replies:
@@ -168,21 +203,6 @@
       reply_type: 0
     - data: 一个人给了少年一件大衣，随着少年越长越大，那件大衣也越来越大，臭蛆oil做事有始无终
       reply_type: 0
-- keywords: ["bad bot", badbot]
-  target_authors: ["*"]
-  replies:
-    - data: '$"网警已进入本群，网警{System.Random.Shared.Next(10_000, 100_000)}已经开始监控本群聊天"'
-      reply_type: 1
-      emotion_type: angry
-    - data: 怎么说话呢？没有素质的东西！
-      reply_type: 0
-      emotion_type: angry
-    - data: 确实挺尬的，终于有人说这一点了。 能看出来本团组想极力模仿原sub的节目效果，可是团长又没混过抽象tv和其他泛抽象圈，导致每次bot出现的地方都极其的尴尬，有一种东施效颦强行幽默的别扭感。还不如直接关了，真的不好笑！
-      reply_type: 0
-      emotion_type: sad
-    - data: 啊对对对，你说是，辣就是，不反驳
-      reply_type: 0
-      emotion_type: angry
 - keywords: [中国人, 中國人]
   target_authors: ["*"]
   replies:
@@ -254,7 +274,7 @@
 - keywords: [广西]
   target_authors: ["*"]
   replies:
-    - data: 贵州和广西相比zap那我还是觉得我们广西牛批zap
+    - data: 贵州和广西相比⚡那我还是觉得我们广西牛批⚡
       reply_type: 0
 - keywords: [东北, 東北, 東百, 东百]
   target_authors: ["*"]
@@ -504,13 +524,13 @@
       reply_type: 0
     - data: 现在兴说这个了，多发，爱看
       reply_type: 0
-    - data: "穆庇禾·躅狼\n这下支了。我们被造底䵹囲了。"
+    - data: "\n穆庇禾·镯狼\n这下支了。我们被造底䵹囲了。"
       reply_type: 0
   trigger_chance: 33
 - keywords: [支性]
   target_authors: ["*"]
   replies:
-    - data: "穆庇禾·躅狼\n这下支了。我们被造底䵹囲了。"
+    - data: "\n穆庇禾·镯狼\n这下支了。我们被造底䵹囲了。"
       reply_type: 0
   trigger_chance: 33
 - keywords: [献忠, 獻忠]
@@ -560,7 +580,7 @@
     ]
   target_authors: ["*"]
   replies:
-    - data: "阿尔萨斯习王\n对，我回来了，巫龜。从终以犞，你长䨒今我习王。跫㚄，这里是我的习土。"
+    - data: "\n阿尔萨斯习王\n对，我回来了，巫龜。从终以犞，你长䨒今我习王。跫㚄，这里是我的习土。"
       reply_type: 0
     - data: 轻关易道，通商宽衣。
       reply_type: 0
@@ -597,6 +617,11 @@
     - data: 谷爱玲是爱吃馅饼，外国人还爱吃饺子。
       reply_type: 0
     - data: 没有可以奉为金科律玉的教科书，也没有可以对中国人民衣使气指的教师爷。
+      reply_type: 0
+- keywords: [习王, 习土]
+  target_authors: ["*"]
+  replies:
+    - data: "\n阿尔萨斯习王\n对，我回来了，巫龜。从终以犞，你长䨒今我习王。跫㚄，这里是我的习土。"
       reply_type: 0
 - keywords: [精甚细腻]
   target_authors: ["*"]
