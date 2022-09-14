@@ -11,7 +11,7 @@ public class Rule
     public bool? IgnoreCase { get; set; }
     public double? TriggerChance { get; set; }
     public string? Type { get; set; }
-    public bool? OnlyMe { get; set; }
+    public bool? AtMe { get; set; }
 }
 
 public class Reply

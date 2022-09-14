@@ -69,7 +69,9 @@ public class Matcher
             .Where(r => (r.Type == null || (r.Type != null &&
                                             ((r.Type == "post" && comment!.CommentId == 0) ||
                                              (r.Type == "comment" && comment!.CommentId != 0)))))
-            .Where(r => (r.OnlyMe != true || (r.OnlyMe == true && at_me == true)))
+            .Where(r => (r.AtMe == null ||
+                        (r.AtMe == true && at_me == true) ||
+                        (r.AtMe == false && at_me == false)))
             .Take(_takes)
             .Select(async r =>
             {
