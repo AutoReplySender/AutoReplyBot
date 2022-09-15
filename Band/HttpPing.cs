@@ -17,8 +17,9 @@ public class HttpPing
         _http = new HttpClient(new HttpClientHandler { Proxy = proxy });
     }
 
-    public async Task<long> Ping(string url)
+    public async Task<long> Ping(string url, CancellationToken cancellationToken = default)
     {
+        await using var _ = cancellationToken.Register(() => _logger.LogInformation("Pinging {Url} cancelled", url));
         _logger.LogDebug("Starting pinging {Url}", url);
         var stopwatch = new Stopwatch();
 
@@ -26,7 +27,7 @@ public class HttpPing
 
         {
             stopwatch.Restart();
-            await _http.GetAsync(url);
+            await _http.GetAsync(url, cancellationToken);
             var elapsed = stopwatch.ElapsedMilliseconds;
             _logger.LogDebug("Warmup pinging {Url} : {Ping}ms", url, elapsed.ToString());
         }
@@ -38,7 +39,7 @@ public class HttpPing
         for (var i = 0; i < 5; i++)
         {
             stopwatch.Restart();
-            await _http.GetAsync(url);
+            await _http.GetAsync(url, cancellationToken);
             var elapsed = stopwatch.ElapsedMilliseconds;
             _logger.LogDebug("Pinging {Url} : {Ping}ms", url, stopwatch.ElapsedMilliseconds.ToString());
             totalTime += elapsed;
@@ -51,15 +52,18 @@ public class HttpPing
 
     public async Task<string> GetFastest(params string[] urls)
     {
-        var results = urls
-            .AsParallel()
-            .Select(url =>
+        using var cancellationTokenSource = new CancellationTokenSource();
+        var cancellationToken = cancellationTokenSource.Token;
+        var tasks = urls
+            .Select(async url =>
             {
-                var ping = Ping(url).Result;
+                var ping = await Ping(url, cancellationToken);
                 _logger.LogInformation("Average ping of {Url} is: {Ping}ms", url, ping.ToString());
                 return new { url, ping };
             });
-        var fastest = results.MinBy(pair => pair.ping)!.url;
+        var result = await await Task.WhenAny(tasks);
+        cancellationTokenSource.Cancel();
+        var fastest = result.url;
         _logger.LogInformation("The fastest url is {Fastest}", fastest);
         return fastest;
     }
