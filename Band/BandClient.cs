@@ -53,7 +53,7 @@ public partial class BandClient
     private readonly string _suffix;
 
     // We will set SecretKey in RefreshAsync() so suppress the uninitialized warning
-    private volatile string _secretKey = null!;
+    private string _secretKey = null!;
 
     public BandClient(BandClientOptions options, HttpPing httpPing, ILogger<BandClient> logger, IWebProxy? proxy = null)
     {

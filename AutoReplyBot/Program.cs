@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Band;
@@ -17,7 +18,8 @@ namespace AutoReplyBot;
 public class Program
 {
     public record Config(string Email, string Password, string ChromeDriverDir, string ChromePath,
-        string Proxy, int MaxTriggerTimesBySinglePost, string? EndPoint, string ConnectionString, List<string> Usernames);
+        string Proxy, int MaxTriggerTimesBySinglePost, string? EndPoint, string ConnectionString,
+        List<string> Usernames);
 
     public static async Task<List<Rule>> LoadRules()
     {
@@ -72,8 +74,7 @@ public class Program
             }
             else
             {
-                // remove \n, \r 
-                cookies = File.ReadAllText("configs/saved.cookies").Trim();
+                cookies = File.ReadAllText("configs/saved.cookies");
             }
 
             return new BandClientOptions
@@ -87,7 +88,8 @@ public class Program
         services.AddScoped<IWebProxy>(_ => new WebProxy(proxy));
         services.AddScoped<HttpPing>();
         services.AddScoped(sp =>
-            new Matcher(LoadRules().Result, maxTriggerTimesBySinglePost, sp.GetRequiredService<ILogger<Matcher>>(), usernames));
+            new Matcher(LoadRules().Result, maxTriggerTimesBySinglePost, sp.GetRequiredService<ILogger<Matcher>>(),
+                usernames));
         // services.AddScoped<BandClient, MockBandClient>();
         services.AddScoped<BandClient>();
         services.AddScoped<CookieHelper>();

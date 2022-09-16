@@ -59,12 +59,11 @@ public class HttpPing
             {
                 var ping = await Ping(url, cancellationToken);
                 _logger.LogInformation("Average ping of {Url} is: {Ping}ms", url, ping.ToString());
-                return new { url, ping };
+                return url;
             });
         var result = await await Task.WhenAny(tasks);
         cancellationTokenSource.Cancel();
-        var fastest = result.url;
-        _logger.LogInformation("The fastest url is {Fastest}", fastest);
-        return fastest;
+        _logger.LogInformation("The fastest url is {Fastest}", result);
+        return result;
     }
 }

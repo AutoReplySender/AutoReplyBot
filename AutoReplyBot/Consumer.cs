@@ -26,7 +26,6 @@ public class Consumer
         {
             _logger.LogDebug("Start consuming {@Comment}", comment);
             await using var db = _sp.GetRequiredService<AutoReplyContext>();
-            if (await db.CheckProcessed(comment)) return;
             var actions = await _matcher.Match(comment, content, userNo, userName);
             // if no action is triggered, skip the comment so it may still trigger our bot after editing.
             if (actions.Length == 0) return;
@@ -89,8 +88,7 @@ public class Consumer
         }
         catch (Exception e)
         {
-            _logger.LogError("Consumer ran into exception {E}", e);
-            _bandClient.RefreshAsync().Wait();
+            _logger.LogError(e, null);
         }
     }
 }

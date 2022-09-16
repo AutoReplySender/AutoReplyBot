@@ -33,7 +33,6 @@
     - data: '$"谢谢您提供信息， <band:refer user_no=\"{MentionedUserNo}\">{MentionedUserName}</band:refer> 语录会在下次更新时写入bot。"'
       reply_type: 1
   at_me: false
-  have_band_refer: true
 - keywords: [三次元]
   target_authors: ["*"]
   replies:
